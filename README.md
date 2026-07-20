@@ -52,8 +52,14 @@ KP-0001 — Knowledge–Projection Integration
 CR-0001 — Context–Runtime Integration
   FORMALLY CLOSED / ACCREDITED
 
+ER-0001 — Execution–Runtime Integration
+  FORMALLY CLOSED / ACCREDITED
+
+ADR-0003 — Explicit Execution Boundary
+  ACCEPTED
+
 Última regresión integral acreditada
-  1174/1174 PASS
+  1190/1190 PASS
 
 Programa funcional activo
   ninguno
@@ -90,9 +96,23 @@ Context Consumption Boundary
         |
         v
 ConsumerInput
+        |
+        v
+Execution Request Construction
+        |
+        v
+ExecutionRequest
+        |
+        v
+Abstract Synchronous Executor
+        |
+        v
+ExecutionResult
 ```
 
-`ConsumerContextView` y `ConsumerInput` son derivados no propietarios. La identidad, autoridad y propiedad permanecen en los objetos canónicos fuente. La baseline no acredita todavía una integración con un motor de ejecución, modelo o ciclo cognitivo concreto.
+`ConsumerContextView` y `ConsumerInput` son derivados no propietarios. `ExecutionRequest` posee identidad operacional, no identidad canónica. `ExecutionResult` es observable y correlacionado, pero no es `CanonicalObject` ni conocimiento persistente. La identidad, autoridad y propiedad del conocimiento permanecen en los objetos canónicos fuente.
+
+La baseline no acredita todavía persistencia/promoción automática de `ExecutionResult` a conocimiento, un proveedor LLM concreto, agent loop, autonomía o ejecución asíncrona.
 
 ## Mapa estructural resumido
 
@@ -113,6 +133,7 @@ proposal/engineering
 |
 +-- engineering/KP-0001-knowledge-projection-integration
 +-- engineering/CR-0001-context-runtime-integration
++-- engineering/ER-0001-execution-runtime-integration
 ```
 
 Este mapa debe mantenerse como orientación de alto nivel en transiciones importantes de programa. Su contenido no demuestra por sí mismo que una rama siga existiendo o esté sincronizada.
@@ -128,7 +149,8 @@ Este repositorio es la fuente de verdad del laboratorio KOS. Toda implementació
 - Auditabilidad completa.
 - No simulación salvo indicación explícita.
 - Un único modelo canónico para ingeniería y conocimiento.
-- Separación explícita entre estado persistido, observación, selección, proyección derivada y consumo contextual derivado.
+- Separación explícita entre estado persistido, observación, selección, proyección derivada, consumo contextual derivado y ejecución operacional derivada.
+- Un resultado de ejecución no adquiere autoridad de conocimiento ni persistencia por defecto.
 - Verificación Git antes de cualquier operación estructural basada en ramas documentadas.
 
 ## Estructura principal
@@ -136,7 +158,7 @@ Este repositorio es la fuente de verdad del laboratorio KOS. Toda implementació
 - `canon/` — referencia normativa y fundacional.
 - `engineering/` — requisitos, ADR, tareas, evidencias, cierres y reportes.
 - `governance/persistence-map/` — continuidad, estado, reentrada, checkpoint, plano y reconciliaciones.
-- `runtime/` — estado y bootstrap del runtime.
+- `runtime/` — estado, bootstrap y fronteras operacionales del runtime.
 - `knowledge/` — conocimiento persistente y semántica asociada.
 - `context/` — observación, selección, proyección, materialización y consumo contextual.
 - `storage/` — persistencia y artefactos.
@@ -161,4 +183,4 @@ README
  -> modificar
 ```
 
-No reabrir CP-0001, KM-0001, KP-0001 o CR-0001 durante una reentrada ordinaria salvo contradicción autoritativa posterior o decisión arquitectónica explícita.
+No reabrir CP-0001, KM-0001, KP-0001, CR-0001 o ER-0001 durante una reentrada ordinaria salvo contradicción autoritativa posterior o decisión arquitectónica explícita.
