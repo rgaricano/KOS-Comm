@@ -49,8 +49,11 @@ KM-0001 — Persistent Knowledge Model
 KP-0001 — Knowledge–Projection Integration
   FORMALLY CLOSED / ACCREDITED
 
+CR-0001 — Context–Runtime Integration
+  FORMALLY CLOSED / ACCREDITED
+
 Última regresión integral acreditada
-  1162/1162 PASS
+  1174/1174 PASS
 
 Programa funcional activo
   ninguno
@@ -81,9 +84,15 @@ Projection Materialization
         |
         v
 ConsumerContextView
+        |
+        v
+Context Consumption Boundary
+        |
+        v
+ConsumerInput
 ```
 
-`ConsumerContextView` es una vista derivada y no propietaria. La identidad, autoridad y propiedad permanecen en los objetos canónicos fuente.
+`ConsumerContextView` y `ConsumerInput` son derivados no propietarios. La identidad, autoridad y propiedad permanecen en los objetos canónicos fuente. La baseline no acredita todavía una integración con un motor de ejecución, modelo o ciclo cognitivo concreto.
 
 ## Mapa estructural resumido
 
@@ -103,6 +112,7 @@ proposal/engineering
 |    +-- engineering/KM-0001-TST-0005-observation-boundary
 |
 +-- engineering/KP-0001-knowledge-projection-integration
++-- engineering/CR-0001-context-runtime-integration
 ```
 
 Este mapa debe mantenerse como orientación de alto nivel en transiciones importantes de programa. Su contenido no demuestra por sí mismo que una rama siga existiendo o esté sincronizada.
@@ -118,7 +128,7 @@ Este repositorio es la fuente de verdad del laboratorio KOS. Toda implementació
 - Auditabilidad completa.
 - No simulación salvo indicación explícita.
 - Un único modelo canónico para ingeniería y conocimiento.
-- Separación explícita entre estado persistido, observación, selección y proyección derivada.
+- Separación explícita entre estado persistido, observación, selección, proyección derivada y consumo contextual derivado.
 - Verificación Git antes de cualquier operación estructural basada en ramas documentadas.
 
 ## Estructura principal
@@ -128,7 +138,7 @@ Este repositorio es la fuente de verdad del laboratorio KOS. Toda implementació
 - `governance/persistence-map/` — continuidad, estado, reentrada, checkpoint, plano y reconciliaciones.
 - `runtime/` — estado y bootstrap del runtime.
 - `knowledge/` — conocimiento persistente y semántica asociada.
-- `context/` — observación, selección, proyección y materialización contextual.
+- `context/` — observación, selección, proyección, materialización y consumo contextual.
 - `storage/` — persistencia y artefactos.
 - `api/` — interfaz programática.
 - `cli/` — interfaz de línea de comandos.
@@ -151,4 +161,4 @@ README
  -> modificar
 ```
 
-No reabrir CP-0001, KM-0001 o KP-0001 durante una reentrada ordinaria salvo contradicción autoritativa posterior o decisión arquitectónica explícita.
+No reabrir CP-0001, KM-0001, KP-0001 o CR-0001 durante una reentrada ordinaria salvo contradicción autoritativa posterior o decisión arquitectónica explícita.
