@@ -10,14 +10,14 @@ architectural_state:
   gate_0: PASS
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
-  ar_2: ACTIVE
+  ar_2: ACTIVE_VALIDATION_PASS_1_COMPLETE
   ar_3: PENDING
   gate_a: PENDING
 
 active_item:
   id: AR-2
   name: Modelo de representación / Representation Model
-  position: initial model complete; validation pass pending
+  position: validation pass 1 complete; refinement pass 2 pending
 
 invariants:
   - KOS-Lab authority preserved
@@ -38,24 +38,61 @@ working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
   - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.es.md
   - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.en.md
   - docs/kos-comn/REENTRY-GUIDE.es.md
   - docs/kos-comn/REENTRY-GUIDE.en.md
   - docs/kos-comn/REENTRY-CHECKPOINT.es.md
 
+validated_findings:
+  - 12 initial AR-2 cases are modelable
+  - rigid representation class taxonomy rejected as core
+  - extensible classification retained
+  - minimal common semantic core is candidate
+  - semantic capabilities are primary candidate
+  - RepresentationEnvelope remains logical reference model only
+  - provenance capability is core but completeness may vary
+  - COMPLETE requires declared scope
+  - Claim, Evidence, Verification and Guarantee remain distinct
+  - SubjectDescriptor must not require a universal global identifier
+
+candidate_model:
+  formula: MINIMAL_COMMON_CORE + SEMANTIC_CAPABILITIES + EXTENSIBLE_CLASSIFICATION
+  core:
+    - representation_identity
+    - subject
+    - semantic_context
+    - provenance
+    - capabilities
+    - content
+  capabilities:
+    - SUBJECT_IDENTIFICATION
+    - REFERENCE_SEMANTICS
+    - PROVENANCE
+    - DERIVATION
+    - COVERAGE
+    - TEMPORALITY
+    - RELATIONSHIPS
+    - COMPOSITION
+    - PROPERTY_CLAIMS
+    - EVIDENCE_LINKAGE
+    - VERIFICATION_STATEMENTS
+    - RECONSTRUCTION_INFORMATION
+
 next_action:
-  id: AR-2-VALIDATION-PASS-1
-  description_es: Ejecutar los 12 casos iniciales de validación y refinar taxonomía/capacidades semánticas.
-  description_en: Run the 12 initial validation cases and refine taxonomy/semantic capabilities.
-  decision_target: common structure vs semantic capability model
+  id: AR-2-REFINEMENT-PASS-2
+  description_es: Refinar núcleo semántico mínimo, capacidades, SubjectDescriptor y semántica Claim/Evidence/Verification/Guarantee.
+  description_en: Refine minimum semantic core, capabilities, SubjectDescriptor and Claim/Evidence/Verification/Guarantee semantics.
+  decision_target: prepare AR-2 closure candidate
 
 open_focus:
-  - representation class taxonomy
-  - claim/evidence/verified guarantee distinction
-  - provenance requirements
-  - scoped completeness
-  - neutral reference semantics
-  - minimum semantic context
-  - RepresentationEnvelope status
+  - exact minimum-core membership
+  - representation_identity requirement for ephemeral representations
+  - safe capability extensibility and ignorability
+  - minimum SubjectDescriptor semantics
+  - formal Claim/Evidence/Verification/Guarantee relationships
+  - neutral-core protection from domain extensions
+  - complex degradation/composition validation
 
 reentry_rule:
   - verify actual Git HEAD before development
