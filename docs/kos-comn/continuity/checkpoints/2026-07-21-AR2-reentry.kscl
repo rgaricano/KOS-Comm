@@ -1,0 +1,113 @@
+KSCL-EXPERIMENTAL/0.1
+
+checkpoint_id: KOS-COMM-2026-07-21-AR2-REENTRY
+checkpoint_kind: semantic-continuity
+language: es
+repository: rgaricano/KOS-Lab
+branch: KOS-Comn
+
+status:
+  gate_0: PASS
+  collaboration_reconciliation: CLOSED
+  ar_1_boundary_model: CLOSED_PASS
+  ar_2_representation_model: ACTIVE_PAUSED
+  ar_3_binding_model: PENDING
+  gate_a: PENDING
+
+verified_history:
+  ar_1_closure_es: c5cb853e1cb7152f230a9b306f2489c70567d73f
+  ar_1_closure_en: 301f4106b1ff10c88a6eba0f36c2bbc1a61c7251
+  ar_2_initial_es: 8561fef92fa8a8ed52edb687dfc223469ba493af
+  ar_2_initial_en: 2e94f070f11c98e607495961e4438613d39d5c5a
+  reentry_guide_es: ba004da7606798d16aea5881699279114a468306
+  reentry_guide_en: 579ce2f060e90e6cfc4ee32cd96e39ca8f0be5f8
+  reentry_checkpoint_es: af0eb41f41fef3fd6ef883ae008c16a23da7b20c
+
+architectural_invariants:
+  - KOS-Lab authority preserved
+  - KOS-Comm autonomy preserved
+  - explicit Binding is the bilateral seam
+  - KCA must remain neutral
+  - KCP must remain small and replaceable
+  - KSCL decomposition remains open until AR-5
+  - receipt != canonical import
+  - communication != authority
+  - representation != represented object
+  - representation != authority
+  - reconstruction != authorization
+  - promotion to KOS-Lab requires evidence + governance
+
+closed_items:
+  - Gate 0 architectural consensus
+  - KOS-Lab <-> KOS-Comm reconciliation
+  - AR-1 Boundary Model
+
+active_work_item:
+  id: AR-2
+  name_es: Modelo de representación
+  name_en: Representation Model
+  state: ACTIVE_PAUSED_FOR_CONTINUITY_IMPLEMENTATION
+
+active_hypotheses:
+  - referent / representation / encoded form are distinct levels
+  - representation identity != subject identity
+  - semantic context must be explicit enough for interpretation
+  - provenance and references require neutral semantics
+  - completeness must be scoped
+  - authority remains external to representation
+  - non-KOS neutrality is mandatory
+  - RepresentationEnvelope is conceptual and must not become a premature protocol message format
+
+ar_2_validation_plan:
+  - reference without object transfer
+  - partial state observation
+  - operational result
+  - local projection
+  - evidence associated with a claim
+  - proposal without incorporation authority
+  - derived representation with known loss
+  - reconstructable representation
+  - composite representation
+  - non-KOS <-> non-KOS exchange
+  - same representation with two encodings
+  - two representations of the same subject
+
+open_questions:
+  - common mandatory structure vs semantic capability set
+  - fundamental representation classes vs domain specializations
+  - neutral subject identity
+  - claim vs evidence vs verified guarantee
+  - mandatory vs class-dependent provenance
+  - neutral completeness/coverage semantics
+  - representation relationships without mandatory universal graph
+  - minimum metadata outside source system
+  - prevention of RepresentationEnvelope becoming protocol framing
+
+continuity_decisions:
+  - KSCL is used experimentally for semantic continuity before AR-5
+  - KSCL records do not have architectural authority
+  - Git verification remains mandatory during reentry
+  - CURRENT.kscl is mutable current state
+  - checkpoint files are historical semantic snapshots
+
+next_action:
+  phase: AR-2
+  action: first validation pass
+  objective: validate 12 scenarios and refine taxonomy/capabilities
+  decision_target: determine common structure vs semantic capability model
+
+reentry_sequence:
+  - read REENTRY-GUIDE
+  - read REENTRY-CHECKPOINT
+  - read CURRENT.kscl
+  - verify repository, branch and actual HEAD
+  - read AR-1 closure
+  - read AR-2 active model
+  - reconcile any later evidence
+  - declare state and next action
+
+assertions:
+  - KSCL continuity != architectural authority
+  - KSCL record != Git verification
+  - KSCL reconstruction != proof
+  - checkpoint state != actual Git state until verified
