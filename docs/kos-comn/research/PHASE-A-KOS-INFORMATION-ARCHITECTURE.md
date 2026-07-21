@@ -120,7 +120,7 @@ Persistent Representation
 ```
 
 ### Finding A-018 — Version space may require relational/non-linear semantics [HISTORICAL DESIGN]
-A simple `previous_version` chain was identified as insufficient for divergence/convergence, but complete navigable branching lineage remains outside accredited KM-0001 scope so far.
+A simple `previous_version` chain was identified as insufficient for divergence/convergence, but complete navigable branching lineage remains outside accredited KM-0001 scope.
 
 ### Finding A-019 — Conceptual separation required
 
@@ -138,7 +138,7 @@ Persistence
 ```
 
 ### Finding A-020 — Evolution graph hypothesis remains partially bounded
-Explicit predecessor and lineage distinctions are accredited; complete general branching/convergence lineage remains unaccredited.
+Explicit predecessor and lineage distinctions are accredited; complete general branching/convergence lineage remains outside the closed KM-0001 contract.
 
 ## 7. KM-0001 TST-0001 findings
 
@@ -197,9 +197,7 @@ operation_id
 ### Finding A-032 — `previous_version` is explicit predecessor, not complete lineage [ACCREDITED BOUNDARY]
 
 ```text
-preserved previous_version
-        !=
-complete historical revision store
+preserved previous_version != complete historical revision store
 ```
 
 Evidence: dedicated `10 PASS`; full regression `1120 PASS`; tested commit `9e3d3863010df6ea671bfaaae7cd6df9ae37114b`.
@@ -246,200 +244,254 @@ Evidence: dedicated `10 PASS`; full regression `1130 PASS`; tested commit `98715
 
 ## 10. KM-0001 TST-0004 Persistent Cognitive State observation findings
 
-Recovered branch: `engineering/KM-0001-TST-0004-persistent-cognitive-state-observation`.
-
-The branch is seven commits ahead of TST-0003 and contains design, inspection, integral inspection, formal closure, dedicated tests and reproducible evidence.
-
-Actual accredited increment: **Observación y proyección del Estado Cognitivo Persistente**.
-
 ### Finding A-043 — Persistent Cognitive State observation is emergent, not a second root ontology [ACCREDITED]
 
-TST-0004 confirms, for its scope, that no autonomous `PersistentCognitiveState` root class is required.
-
-The accredited chain is:
-
 ```text
-persist
-  ↓
-reconstruct
-  ↓
-observe
-  ↓
-select
-  ↓
-project
-  ↓
-provenance
+persist -> reconstruct -> observe -> select -> project -> provenance
 ```
-
-A cognitive view can emerge from composition over the reconstructed canonical graph without creating another persistent state ontology.
-
-KCA consequence: KSCL should model communicated cognitive state as a representation/projection contract, not as a mandatory new ontological root that replaces the source information model.
 
 ### Finding A-044 — Persisted, active/observed, selected and projected state are distinct [ACCREDITED]
 
 ```text
-persisted state
-    !=
-active / observed state
-    !=
-contextual selection
-    !=
-derived projection
+persisted state != active/observed state != contextual selection != derived projection
 ```
-
-These layers compose without collapsing responsibilities.
-
-KCA consequence: a communicated state representation needs to declare what layer it represents. A receiver must not infer `persisted`, `complete` or `canonical` merely from receipt.
 
 ### Finding A-045 — Observation is non-mutating [ACCREDITED]
 
-Persistent knowledge can be observed without mutating source knowledge or the persistent registry.
-
-```text
-OBSERVE(source)
-       ↓
-derived observation
-       X
-source mutation
-```
-
-This strengthens KCA-INV-12: observation/receipt is not hydration and is also not source mutation.
-
 ### Finding A-046 — Context selection operates on canonical references/identities [ACCREDITED]
-
-Contextual selection operates over references/identities rather than by mutating source state.
-
-KCA consequence: selection semantics should be representable as boundary/reference semantics, not by manufacturing altered source objects merely to indicate inclusion.
 
 ### Finding A-047 — Derived projection is immutable [ACCREDITED]
 
-The TST-0004 family accredits immutability of the derived projection.
-
-KCA consequence: a transmitted projection should be treated as an immutable observation artifact for that observation event/boundary. A later changed view should be another projection/representation, not silent mutation of the already identified observation artifact.
-
 ### Finding A-048 — Projection provenance preserves source identities [ACCREDITED]
-
-Projection provenance retains source object IDs.
-
-This creates a strong KSCL requirement:
-
-```text
-Projection
-├── projected content / references
-└── provenance
-      └── source_object_ids[]
-```
-
-The exact neutral KCA schema remains undecided, but source traceability must survive projection and communication when available.
 
 ### Finding A-049 — Observation preserves relevant evidence and relation context [ACCREDITED]
 
-The observed state retains evidence and relevant relationship context.
-
-KCA consequence: a state projection intended for meaningful reconstruction cannot be reduced blindly to isolated object payloads. Its evidential/relational context may be semantically required.
-
 ### Finding A-050 — Contextual projection excludes unrelated objects [ACCREDITED]
 
-A projection can select a coherent subject-related set while excluding unrelated canonical objects.
+```text
+projection completeness != global-state completeness
+```
+
+### Finding A-051 — Active state may differ from persisted state without semantic conflict [ACCREDITED]
+
+### Finding A-052 — Projection provenance is not source evidence [ACCREDITED]
+
+### Finding A-053 — Projection does not create lineage [ACCREDITED]
+
+### Finding A-054 — Explicit state-evolution lineage can be reconstructed in observation [ACCREDITED WITH SCOPE]
+
+### Finding A-055 — TST-0004 exposed a remaining public-boundary debt [ACCREDITED HISTORICAL BOUNDARY]
+TST-0004 proved integration-layer composition but did not yet formally expose a public observation API. Integral inspection correctly identified this as a contractual debt, later resolved by TST-0005.
+
+Evidence: dedicated `10 PASS`; full regression `1140 PASS`; tested commit `89f5f6837c0c67eebf53c3b2bd68da532fc37e5a`.
+
+## 11. KM-0001 TST-0005 Public Observation Boundary findings
+
+Recovered branch: `engineering/KM-0001-TST-0005-observation-boundary`.
+
+Direct ref comparison confirms it exists and is thirteen commits ahead of TST-0004. It contains the production observation adapter, dedicated tests/evidence, final integral inspection, formal KM-0001 closure in ES/EN, and persistence-map updates.
+
+Actual accredited increment: **Frontera pública de observación del Estado Cognitivo Persistente**.
+
+### Finding A-056 — A public non-owning observation boundary is required and now accredited [ACCREDITED]
+
+TST-0005 resolves the distinction between “a consumer can construct an observation” and “the architecture formally exposes an observation boundary”.
+
+Public API:
+
+```text
+observe_canonical_object(obj)
+    -> StateObservation
+
+observe_persistent_state(source)
+    -> tuple[StateObservation, ...]
+```
+
+The implementation resides in `context/observation.py`.
+
+### Finding A-057 — Observation boundary belongs to context, not canonical core [ACCREDITED]
+
+Dependency direction:
+
+```text
+src.kos.canonical_object
+        ^
+        | consume
+context.observation
+        |
+        v produce
+context.selection.StateObservation
+        |
+        v
+deterministic_select()
+```
+
+The canonical core does not depend on `context.selection`.
+
+KCA consequence: the KOS↔KCA adapter/binding should consume canonical/public observation capabilities from outside the canonical core. Communication concerns must not be injected downward into canonical ontology.
+
+### Finding A-058 — Observation preserves canonical identity and observable type [ACCREDITED]
+
+The public adapter maps:
+
+```text
+CanonicalObject.identity.canonical_id -> StateObservation.object_id
+CanonicalObject.identity.type         -> StateObservation.kind
+```
+
+This is a semantic projection of source identity, not creation of a new canonical identity.
+
+### Finding A-059 — Observation output is deterministic [ACCREDITED]
+
+`observe_persistent_state()` orders source objects by stable canonical identity and returns an immutable tuple of observations.
+
+KCA consequence: deterministic observation is available before encoding/transport. KEncoding should preserve deterministic semantics and avoid introducing gratuitous nondeterminism when canonical ordering is relevant.
+
+### Finding A-060 — Observation boundary performs no contextual selection [ACCREDITED]
+
+The boundary observes; selection remains a downstream operation.
+
+```text
+Persistent canonical state
+        ↓ observe
+StateObservation[]
+        ↓ select
+Context selection
+        ↓ project
+Cognitive projection
+```
+
+This corrects any model that places selection inside the observation adapter.
+
+### Finding A-061 — Observation boundary performs no persistence, projection or ownership [ACCREDITED]
+
+It does not introduce:
+
+```text
+PersistentCognitiveState root
+parallel cognitive repository
+new persistence
+commit
+context selection
+projection
+own provenance
+relations
+implicit lineage
+```
+
+The boundary observes only.
+
+### Finding A-062 — Observation equivalence survives persistence/reconstruction [ACCREDITED]
+
+Observable semantics are equivalent after persistence and reconstruction.
+
+KCA consequence: a KOS binding may use the public observation boundary against reconstructed state without changing the intended observable information contract.
+
+### Finding A-063 — Observation is independent of ProjectionRequest, strategy and consumer [ACCREDITED]
+
+The observation layer does not depend on a particular projection request or consumer.
+
+This is a strong decoupling property for KCA: neutral communication can consume observation output without forcing the source to know the eventual projection/consumer policy at observation time.
+
+### Finding A-064 — Observable state is deliberately narrower than the complete canonical object [ACCREDITED IMPLEMENTATION FACT]
+
+Current public `StateObservation` construction exposes:
+
+```text
+object_id
+kind
+attributes:
+    status
+    state.attributes
+```
+
+It does not itself serialize the complete canonical object, evidence graph, relationships, version or persistence metadata.
 
 Therefore:
 
 ```text
-projection completeness
-    !=
-global state completeness
+StateObservation != CanonicalObject serialization
 ```
 
-A projection may be internally coherent for its declared context while intentionally incomplete relative to the global persistent graph.
+KCA/KSCL consequence: the public observation boundary is a source for observable state, not automatically a complete state-transfer format. Rich reconstruction packages may need additional explicitly bound information channels/structures.
 
-This is a precursor to the Observation Boundary contract.
+### Finding A-065 — Observation boundary is a semantic choke point [DERIVED KCA CONSEQUENCE]
 
-### Finding A-051 — Active state may differ from persisted state without semantic conflict [ACCREDITED]
+For KOS integration, `context/observation.py` is now the accredited architectural boundary between persistent canonical state and contextual cognition.
 
-TST-0004 explicitly accredits separation between active/observed and persisted state.
+KCA should preferentially bind at or above this boundary for observational/state-view communication, while canonical object transfer/import remains a distinct use case requiring explicit authority and persistence semantics.
 
-KCA consequence: freshness/state-layer metadata will likely be required in the neutral model. A receiver cannot safely interpret an observed active view as the persisted authoritative snapshot unless that status is explicitly asserted by the source binding.
-
-### Finding A-052 — Projection provenance is not source evidence [ACCREDITED]
-
-```text
-projection provenance
-        !=
-source knowledge evidence
-```
-
-This extends TST-0003: source IDs and derivation information explain how a projection was formed but do not automatically justify the truth of the source knowledge.
-
-### Finding A-053 — Projection does not create lineage [ACCREDITED]
-
-```text
-observe/select/project
-        !=
-knowledge lineage creation
-```
-
-Neither observation nor projection creates an implicit semantic revision edge.
-
-### Finding A-054 — Explicit state-evolution lineage can be reconstructed in observation [ACCREDITED WITH SCOPE]
-
-The dedicated family accredits reconstruction of explicit state-evolution lineage for the observed subject/manifestations while retaining the non-regression rule that generic temporal relations do not create lineage.
-
-This means KCA may carry explicit lineage context present in a projection, but must not infer missing lineage from observation order or timestamps.
-
-### Finding A-055 — No dedicated observation adapter is yet architecturally required [ACCREDITED BOUNDARY]
-
-No public `CanonicalObject -> StateObservation` API was identified. TST-0004 demonstrates that composition can occur explicitly in the integration layer without identity loss or mutation.
-
-A future adapter is justified only if multiple consumers require a common contract and real semantic duplication appears.
-
-KCA implication: KCA itself may become one such consumer pressure, but the KOS binding should be designed from the neutral contract rather than prematurely changing KOS production APIs.
-
-### Evidence accreditation — TST-0004
+### Evidence accreditation — TST-0005
 
 Dedicated family:
 
 ```text
-tests/test_persistent_cognitive_state_observation.py
+tests/test_persistent_state_observation_boundary.py
 10 PASS / 0 FAIL / 0 ERROR
 ```
-
-It accredits:
-
-- non-mutating persistent knowledge observation;
-- contextual selection on canonical references;
-- immutable derived projection;
-- source IDs preserved in projection provenance;
-- evidence/relation context preserved during observation;
-- explicit state-evolution lineage reconstruction;
-- exclusion of unrelated objects;
-- active/observed versus persisted state separation;
-- no registry mutation after persistence/reconstruction/projection;
-- no implicit lineage from observation/projection.
 
 Full regression:
 
 ```text
-1140 observed
-1140 PASS
+1150 observed
+1150 PASS
 0 FAIL
 0 ERR
 Return code: 0
 Verification errors: none
 ```
 
-Tested commit: `89f5f6837c0c67eebf53c3b2bd68da532fc37e5a`.
+Tested commit: `ac62f5854772ea8a15c7e27d3d5b7ee29b847f9c`.
 
-Production impact:
+## 12. KM-0001 formal program closure
+
+KM-0001 is **FORMALLY CLOSED / ACCREDITED**.
+
+No essential architectural obligation remains that justifies opening TST-0006.
+
+Consolidated architecture:
 
 ```text
-Changes in src/: 0
-New PersistentCognitiveState root class: 0
-New cognitive repository: 0
-Projection-owned persistence: 0
+Canonical Model
+    |
+    +-- semantic knowledge roles
+    +-- canonical identity / version / state
+    +-- canonical relationships
+    +-- evidence / provenance
+    +-- persistence / reconstruction
+             |
+             v
+Persistent Cognitive State
+(emergent / reconstructible canonical graph state)
+             |
+             v
+Public Observation Boundary
+             |
+             v
+StateObservation[]
+             |
+             v
+Cognitive Projection
+             |
+             v
+Consumer Context View
 ```
 
-## 11. Initial KCA compatibility invariants
+The closed program explicitly preserves:
+
+```text
+KNOWLEDGE MODEL != SECOND CANONICAL MODEL
+PERSISTENCE != PROJECTION
+OBSERVATION != PROPRIETARY COPY OF STATE
+TEMPORAL RELATION != REVISION LINEAGE
+PROJECTION != KNOWLEDGE MUTATION
+CONSUMER VIEW != CANONICAL KNOWLEDGE
+INFERENCE != UNIVERSAL ONTOLOGICAL ROOT
+```
+
+The next functional front is not further completion of Persistent Knowledge. It is the end-to-end integration between Persistent Knowledge and Cognitive Projection, which requires its own inspection/formulation/opening decision.
+
+## 13. Initial KCA compatibility invariants
 
 ### KCA-INV-01 — No authority promotion
 Transmission does not confer canonical authority.
@@ -472,7 +524,6 @@ When identity exists, KCA should support reference-based graph reconstruction wi
 ### KCA-INV-11 — Knowledge communication must not create a second KOS ontology
 
 ### KCA-INV-12 — Observation is not hydration or mutation
-Receiving/observing a remote representation must not implicitly hydrate durable knowledge or mutate source/persisted state.
 
 ### KCA-INV-13 — Identity, representation revision and lineage are independent dimensions
 
@@ -495,59 +546,83 @@ Receiving/observing a remote representation must not implicitly hydrate durable 
 ### KCA-INV-22 — Projection provenance remains projection provenance
 
 ### KCA-INV-23 — State layer must remain explicit
-Persisted state, active/observed state, contextual selection and derived projection must not be collapsed into one undifferentiated communicated state.
 
 ### KCA-INV-24 — Projection completeness is boundary-relative
-A projection may be complete/coherent for its declared context while incomplete relative to the global persistent state.
 
 ### KCA-INV-25 — Projection source traceability must survive when available
-A derived projection should preserve references/identities of source objects needed to explain its derivation.
 
 ### KCA-INV-26 — Projection does not create source semantics
-Selecting or projecting source objects does not create source evidence, canonical authority, persistence or lineage.
 
 ### KCA-INV-27 — Observation artifacts are immutable representations
-An identified observation/projection represents a bounded result. Later state changes should produce another representation rather than retroactively alter the semantics of the earlier observation.
 
-## 12. Emerging KCA/KSCL state communication model
+### KCA-INV-28 — Observation and selection are separate protocol semantics
+A source may expose observable state without selecting a consumer context. KCA/KSCL must not make observation inherently consumer-specific.
 
-TST-0004 makes the future separation increasingly clear:
+### KCA-INV-29 — Observation is not canonical serialization
+`StateObservation` is an observable state projection and must not be interpreted as a lossless serialization of `CanonicalObject`.
+
+### KCA-INV-30 — Binding direction must preserve canonical-core independence
+KOS communication integration must depend on canonical/context public contracts; the canonical core must not depend on KCA/KCP/KSCL.
+
+### KCA-INV-31 — Deterministic source observation should remain deterministically representable
+Where the source observation contract provides stable ordering and deterministic output, encoding/transport layers should not destroy that property without explicit reason.
+
+## 14. Emerging KCA/KSCL state communication model
+
+The corrected accredited sequence is:
 
 ```text
 Persistent Canonical Graph
         │
-        │ reconstruct
+        │ persistence / reconstruction
         ▼
-Observable State
+Public Observation Boundary
         │
-        │ select(context / refs)
+        │ observe only
         ▼
-Observation Boundary
+StateObservation[]
         │
-        │ project
+        │ contextual selection
+        ▼
+Selected Observation Set
+        │
+        │ cognitive projection
         ▼
 Immutable Cognitive Projection
         │
         ├── source references
-        ├── relevant relations
-        ├── relevant evidence
+        ├── relevant relations/evidence where projection contract requires them
         └── projection provenance
         │
-        │ encode / communicate
+        │ KOS ↔ KCA binding
         ▼
-KSCL Representation
+KCA Neutral Information Representation
+        │
+        │ KEncoding
+        ▼
+KSCL / KCP communication structures
 ```
 
-This is not yet a final protocol/schema. It is the accredited semantic decomposition that the neutral KCA model must be able to preserve.
+Important correction from the TST-0004-only reconstruction:
 
-The key distinction is now:
+```text
+OBSERVATION BOUNDARY
+        precedes
+CONTEXTUAL SELECTION
+```
+
+The boundary itself does not select or project.
+
+Global semantic distinction:
 
 ```text
 WHAT EXISTS
       !=
 WHAT IS PERSISTED
       !=
-WHAT IS ACTIVE / OBSERVED
+WHAT IS OBSERVABLE
+      !=
+WHAT IS OBSERVED
       !=
 WHAT IS SELECTED
       !=
@@ -557,66 +632,75 @@ WHAT IS ENCODED
       !=
 WHAT IS TRANSMITTED
       !=
-WHAT THE RECEIVER IMPORTS
+WHAT THE RECEIVER ACCEPTS / IMPORTS
 ```
 
-## 13. Decoupling implication
+## 15. Decoupling implication
 
 ```text
 KOS Canonical Model
         ↓
-KOS Observation / Binding Composition
+KOS Public Observation Boundary / Canonical APIs
         ↓
 KOS ↔ KCA Binding
         ↓
 KCA Neutral Information Model
         ↓
-KEncoding / KCP / KSCL
+KEncoding
+        ↓
+KCP / KSCL
 ```
 
-A non-KOS system may expose equivalent state/identity/evidence/provenance/boundary semantics without implementing `CanonicalObject`.
+For observational communication, KCA should bind at or above the public observation boundary.
 
-A KOS binding must preserve the accredited distinctions rather than leak implementation classes into the neutral protocol.
+For canonical state transfer/import, a separate explicit binding contract is required because observation output is intentionally not a complete canonical serialization and receipt does not confer persistence or authority.
 
-## 14. Evidence status
+A non-KOS system remains free to expose equivalent neutral semantics without implementing `CanonicalObject` or `StateObservation` internally.
 
-Accredited through TST-0004 now includes:
+## 16. Evidence status after KM-0001 closure
+
+Accredited:
 
 - canonical knowledge specialization;
 - stable canonical identity;
 - semantic version / transactional revision / operation identity separation;
-- explicit predecessor preservation;
-- repository/persistence separation;
-- non-hydrating and non-mutating observation;
+- persistent transactional lifecycle and idempotency;
+- persistence/reconstruction;
 - canonical relations;
+- temporal relation / lineage separation;
 - inline and referenced evidence;
-- shared canonical evidence;
-- evidence provenance;
+- evidence provenance and traceability;
 - projection provenance separation;
-- Persistent Cognitive State observation as emergent composition;
-- persisted / active-observed / contextual selection / projection separation;
+- Persistent Cognitive State as emergent/reconstructible canonical graph state;
+- persisted / observed / selected / projected state separation;
+- non-mutating observation;
 - immutable derived projection;
-- projection source-ID traceability;
-- preservation of relevant evidence/relation context;
-- contextual exclusion of unrelated objects;
-- explicit observed state-evolution lineage reconstruction;
-- no implicit lineage from temporal relation or projection.
+- source traceability in projection;
+- public non-owning observation boundary;
+- deterministic observation output;
+- observation/selection separation;
+- observation independence from projection request/strategy/consumer;
+- observable semantic equivalence after persistence/reconstruction;
+- canonical-core independence from context observation layer.
 
-Still unresolved or requiring further accreditation/analysis:
+Outside the closed KM-0001 contract / future work:
 
-- complete navigable historical revision store;
-- general branching/convergence lineage ontology;
-- full final status of historical first-class relationship design claims;
-- formal Observation Boundary contract as a separately identified increment/artifact;
+- complete general historical revision store and full branching/convergence lineage ontology;
 - receiver-side import/promotion/authority policy;
 - neutral KCA information schema;
-- KSCL reconstruction/completeness levels.
+- KSCL completeness/reconstruction profiles;
+- communication encoding and transport semantics;
+- end-to-end Knowledge ↔ Projection integration program beyond the now-accredited boundary.
 
-## 15. Next investigation
+## 17. Phase A decision point
 
-1. Resolve whether `engineering/KM-0001-TST-0005-observation-boundary` exists as a historical branch/artifact or whether the program moved directly to integral inspection/closure after TST-0004.
-2. If TST-0005 exists, recover and accredit its Observation Boundary semantics.
-3. If it does not, inspect `engineering/KM-0001-INTEGRAL-INSPECTION-2026-07-20.es.md` and later KM-0001 program closure to determine the actual terminal boundary.
-4. Build the formal KOS Information Object Taxonomy.
-5. Build the Authority / Ownership / Derivation Matrix.
-6. Derive the first neutral KCA information model only after the program boundary is verified.
+The KM-0001 historical reconstruction is now sufficiently closed for KCA purposes.
+
+Next work should stop extending the KM-0001 chronology unless a contradiction is discovered and move to synthesis:
+
+1. Build **KOS Information Object Taxonomy** from accredited contracts.
+2. Build **Authority / Ownership / Derivation Matrix**.
+3. Define **Communication Semantic Classes**: observation, projection, canonical-reference, evidence, relation, provenance, lineage, operation, publication-result.
+4. Define **KSCL completeness/reconstruction levels** without conflating observation with canonical serialization.
+5. Derive the first **KCA Neutral Information Model**.
+6. Only then specify KEncoding and KCP wire/transport behavior.
