@@ -1,186 +1,87 @@
-# KOS-Lab
+# KOS-Lab — KOS-Comn
 
-Repositorio canónico de ingeniería de KOS.
+Rama de laboratorio dedicada al replanteamiento del **subsistema de información y comunicaciones de KOS**.
 
-## Punto de entrada operativo
+Esta rama parte del repositorio canónico `KOS-Lab`, pero mantiene aislado el trabajo de arquitectura de comunicaciones hasta que exista una decisión explícita de integración.
 
-Si retomas KOS después de otra sesión, trabajas desde otro entorno o necesitas determinar con seguridad dónde continuar, comienza aquí:
+## Punto de entrada de KOS-Comn
 
-1. `governance/persistence-map/KOS-PM.es.md` — mapa general de continuidad y orientación.
-2. `governance/persistence-map/DEVELOPMENT-STATE.es.md` — estado operativo persistido.
-3. `governance/persistence-map/REENTRY-CHECKPOINT.es.md` — estado esperado para comparación.
-4. `governance/persistence-map/REENTRY-GUIDE.es.md` — procedimiento de reentrada y verificación.
-5. `governance/persistence-map/SITUATION-PLAN.es.md` — plano conceptual derivado.
+Para retomar este trabajo después de una pérdida de contexto, leer en este orden:
 
-Antes de confiar en una rama documentada o en referencias `origin/*` locales:
+1. `README.md` — orientación y alcance de la rama.
+2. `docs/kos-comn/DEVELOPMENT-STATE.md` — estado persistente actual.
+3. `docs/kos-comn/SESSION-CONSOLIDATION.md` — último checkpoint de trabajo.
+4. `docs/kos-comn/architecture/KCA.md` — arquitectura de referencia.
+5. `docs/kos-comn/adr/ADR-0001-KCA.md` — decisión arquitectónica fundacional.
+6. Documentación KOS relevante en `governance/persistence-map/`, `canon/`, `engineering/`, `knowledge/`, `context/` y `runtime/` cuando sea necesario contrastar autoridad o integración.
 
-```bash
-git fetch --prune
-git status --short
-git branch --show-current
-git log -1 --oneline
-git status -sb
-```
+## Objetivo
 
-Regla operativa:
+Diseñar una arquitectura coherente para representar, codificar, comunicar, reconstruir y proyectar información y conocimiento entre componentes cognitivos de KOS.
+
+El planteamiento inicial se organiza bajo **KCA — Knowledge Communication Architecture**.
 
 ```text
-README = ENTRY POINT / ORIENTATION
-KOS-PM = CONTINUITY MAP
-REENTRY-CHECKPOINT = EXPECTED STATE
-Git = ACTUAL REPOSITORY STATE
-Canon / ADR / ARCH = ARCHITECTURAL AUTHORITY
-Evidence = ACCREDITED OBSERVATION
-
-DOCUMENTED BRANCH != VERIFIED BRANCH
+Persistence
+   ↓
+KRM — Knowledge Representation Model
+   ↓
+KEncoding — Knowledge Encoding
+   ↓
+KCP — Knowledge Communication Protocol
+   ↓
+KSCL — Knowledge Session Continuity Layer
+   ↓
+CP — Cognitive Projection
+   ↓
+Consumers
 ```
 
-Git es la autoridad para confirmar existencia de ramas, HEAD, upstream, divergencia y ancestry. Los mapas documentales son ayudas de orientación, no sustitutos de esa verificación.
+## Principio de diseño
 
-## Estado funcional resumido
+KCP y KSCL dejan de considerarse conceptos aislados o el sistema completo de comunicaciones.
+
+KCA pasa a ser el marco arquitectónico superior y separa responsabilidades:
+
+- **KRM** define la semántica de la información/conocimiento intercambiable.
+- **KEncoding** define codificación, serialización, integridad y compatibilidad.
+- **KCP** define comunicación e intercambio entre nodos.
+- **KSCL** define continuidad y reconstrucción determinista de estado.
+- **CP** adapta el estado a consumidores sin transferir autoridad canónica a la proyección.
+
+## Relación con KOS
+
+Esta rama no sustituye la arquitectura canónica de KOS ni modifica automáticamente decisiones existentes.
+
+El trabajo KOS-Comn debe contrastarse con las fronteras ya acreditadas en KOS, especialmente conocimiento persistente, estado cognitivo persistente, observación, proyección, contexto, ejecución, procedencia, evidencia e identidad.
+
+## Disciplina de persistencia
+
+La fuente de continuidad es el repositorio, no la conversación.
+
+Después de cada hito relevante se actualizarán:
+
+- `docs/kos-comn/DEVELOPMENT-STATE.md`;
+- `docs/kos-comn/SESSION-CONSOLIDATION.md`;
+- los documentos arquitectónicos afectados;
+- los ADR cuando exista una decisión estructural.
+
+Ante respuestas ambiguas del conector GitHub se aplica obligatoriamente el procedimiento del Issue #5:
 
 ```text
-CP-0001 — Cognitive Projection
-  FORMALLY CLOSED / ACCREDITED
-
-KM-0001 — Persistent Knowledge Model
-  FORMALLY CLOSED / ACCREDITED
-
-KP-0001 — Knowledge–Projection Integration
-  FORMALLY CLOSED / ACCREDITED
-
-CR-0001 — Context–Runtime Integration
-  FORMALLY CLOSED / ACCREDITED
-
-ER-0001 — Execution–Runtime Integration
-  FORMALLY CLOSED / ACCREDITED
-
-ADR-0003 — Explicit Execution Boundary
-  ACCEPTED
-
-Última regresión integral acreditada
-  1190/1190 PASS
-
-Programa funcional activo
-  ninguno
-
-Siguiente programa funcional
-  no determinado / no abierto
+AMBIGUOUS CONNECTOR RESPONSE != NO REPOSITORY MUTATION
+SEARCH INDEX MISS != BRANCH ABSENCE
+WRITE RETRY REQUIRES STATE VERIFICATION
 ```
 
-La baseline funcional consolidada alcanza actualmente:
+## Estado actual
 
-```text
-Persistent Knowledge
-        |
-        v
-Persistent Cognitive State
-        |
-        v
-Observation Boundary
-        |
-        v
-StateObservation[]
-        |
-        v
-Deterministic Selection
-        |
-        v
-Projection Materialization
-        |
-        v
-ConsumerContextView
-        |
-        v
-Context Consumption Boundary
-        |
-        v
-ConsumerInput
-        |
-        v
-Execution Request Construction
-        |
-        v
-ExecutionRequest
-        |
-        v
-Abstract Synchronous Executor
-        |
-        v
-ExecutionResult
-```
+- Repositorio: `rgaricano/KOS-Lab`
+- Rama aislada: `KOS-Comn`
+- Base inicial: `dev`
+- Trabajo activo: definición y consolidación de KCA.
+- Primera decisión propuesta: KCA como arquitectura superior de KRM, KEncoding, KCP, KSCL y CP.
 
-`ConsumerContextView` y `ConsumerInput` son derivados no propietarios. `ExecutionRequest` posee identidad operacional, no identidad canónica. `ExecutionResult` es observable y correlacionado, pero no es `CanonicalObject` ni conocimiento persistente. La identidad, autoridad y propiedad del conocimiento permanecen en los objetos canónicos fuente.
+## Siguiente acción
 
-La baseline no acredita todavía persistencia/promoción automática de `ExecutionResult` a conocimiento, un proveedor LLM concreto, agent loop, autonomía o ejecución asíncrona.
-
-## Mapa estructural resumido
-
-Topología orientativa de líneas de ingeniería relevantes:
-
-```text
-proposal/engineering
-|
-+-- engineering/ET-0001-test-automation
-+-- engineering/BL-0001-baseline-governance
-+-- engineering/CP-0001-cognitive-projection
-+-- engineering/KOS-PM-persistence-map
-+-- engineering/KM-0001-persistent-knowledge-model
-|    +-- engineering/KM-0001-TST-0002-transactional-lifecycle
-|    +-- engineering/KM-0001-TST-0003-knowledge-evidence-provenance
-|    +-- engineering/KM-0001-TST-0004-persistent-cognitive-state-observation
-|    +-- engineering/KM-0001-TST-0005-observation-boundary
-|
-+-- engineering/KP-0001-knowledge-projection-integration
-+-- engineering/CR-0001-context-runtime-integration
-+-- engineering/ER-0001-execution-runtime-integration
-```
-
-Este mapa debe mantenerse como orientación de alto nivel en transiciones importantes de programa. Su contenido no demuestra por sí mismo que una rama siga existiendo o esté sincronizada.
-
-## Baseline 0.1
-
-Este repositorio es la fuente de verdad del laboratorio KOS. Toda implementación, decisión, evidencia y artefacto deben ser trazables al Canon.
-
-## Principios
-
-- Conformidad obligatoria con el Canon.
-- Trazabilidad completa.
-- Auditabilidad completa.
-- No simulación salvo indicación explícita.
-- Un único modelo canónico para ingeniería y conocimiento.
-- Separación explícita entre estado persistido, observación, selección, proyección derivada, consumo contextual derivado y ejecución operacional derivada.
-- Un resultado de ejecución no adquiere autoridad de conocimiento ni persistencia por defecto.
-- Verificación Git antes de cualquier operación estructural basada en ramas documentadas.
-
-## Estructura principal
-
-- `canon/` — referencia normativa y fundacional.
-- `engineering/` — requisitos, ADR, tareas, evidencias, cierres y reportes.
-- `governance/persistence-map/` — continuidad, estado, reentrada, checkpoint, plano y reconciliaciones.
-- `runtime/` — estado, bootstrap y fronteras operacionales del runtime.
-- `knowledge/` — conocimiento persistente y semántica asociada.
-- `context/` — observación, selección, proyección, materialización y consumo contextual.
-- `storage/` — persistencia y artefactos.
-- `api/` — interfaz programática.
-- `cli/` — interfaz de línea de comandos.
-- `tests/` — validación y conformidad.
-- `tools/` y `engineering/tools/` — utilidades y automatización del laboratorio.
-- `docs/` — documentación operativa adicional.
-
-## Reentrada mínima
-
-```text
-README
- -> KOS-PM
- -> DEVELOPMENT-STATE
- -> REENTRY-CHECKPOINT
- -> git fetch --prune
- -> verificar estado Git real
- -> REENTRY-GUIDE
- -> evidencia/cierres aplicables
- -> declarar rama y siguiente acción
- -> modificar
-```
-
-No reabrir CP-0001, KM-0001, KP-0001, CR-0001 o ER-0001 durante una reentrada ordinaria salvo contradicción autoritativa posterior o decisión arquitectónica explícita.
+Persistir el estado inicial, la consolidación de sesión, la especificación KCA y ADR-0001; después iniciar el análisis formal de KRM y de las interfaces entre capas.
