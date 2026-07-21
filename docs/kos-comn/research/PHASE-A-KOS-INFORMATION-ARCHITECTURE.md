@@ -224,7 +224,80 @@ KCA must not collapse these concepts for protocol convenience.
 
 The working hypothesis is that evolution can be represented as a referential graph of materialised states associated with stable identities, allowing branching and potential convergence without reducing versioning to a linear counter or event sourcing ontology.
 
-## 7. Initial KCA compatibility invariants
+## 7. KM-0001 accredited Persistent Knowledge findings
+
+Historical branch head inspected: `engineering/KM-0001-persistent-knowledge-model`, commit `c13e0d56c9be7d5f2e31b3126195961209210ce2`.
+
+Formal closure inspected: `engineering/KM-0001-TST-0001-CLOSURE-2026-07-20.en.md`.
+
+### Finding A-021 — No second ontological root for knowledge [ACCREDITED]
+
+TST-0001 formally accredits the hypothesis that persistent knowledge can use the existing Canonical Object model without introducing a `KnowledgeObject` root class or a parallel canonical model.
+
+Consolidated relation:
+
+```text
+Knowledge Object
+    = Canonical Object
+    + knowledge semantic specialization / role
+    + domain contracts
+```
+
+This is a major KCA compatibility constraint: a KOS binding must not introduce a parallel identity/ontology merely to communicate knowledge.
+
+### Finding A-022 — Canonical identity survives representation versioning [ACCREDITED]
+
+The accredited increment confirms that `canonical_id` remains stable across versioned representations and that changing `Version` does not alter canonical identity.
+
+KCA consequence: wire/encoding revision and object representation revision must not silently mutate source identity.
+
+### Finding A-023 — Active repository and durable persistence are separate [ACCREDITED]
+
+TST-0001 confirms that active repository state and durable persistence are distinct and that observing active state does not implicitly hydrate objects from persistence.
+
+KCA consequence: remote observation must not imply remote hydration/import. Observation, retrieval and incorporation need separate semantics.
+
+### Finding A-024 — Relations and evidence reuse canonical capabilities [ACCREDITED]
+
+Persistent Knowledge does not define parallel relation/evidence systems. It reuses existing canonical capabilities.
+
+KCA consequence: the KOS binding should map canonical relations/evidence consistently rather than create protocol-only substitutes that lose canonical semantics.
+
+### Finding A-025 — Identity, representation version and historical lineage are distinct [ACCREDITED BOUNDARY]
+
+The formal closure explicitly distinguishes:
+
+```text
+stable canonical identity
+        !=
+representation version
+        !=
+persistent reconstructable historical lineage
+```
+
+At TST-0001 closure, identity and versioning were accredited, but complete persistent reconstructable revision history was not yet accredited. That boundary is delegated to TST-0002.
+
+### Evidence accreditation
+
+Dedicated conformance family:
+
+```text
+tests/test_persistent_knowledge_conformance.py
+8 PASS / 0 FAIL / 0 ERROR
+```
+
+Full regression evidence at tested commit `a24e15385fe2227212e9509a24715f1e873fb423`:
+
+```text
+1110 observed
+1110 PASS
+0 FAIL
+0 ERR
+```
+
+The tested commit confirms the conformance family imports the actual canonical, knowledge-store, persistence and repository implementations from `src.kos`.
+
+## 8. Initial KCA compatibility invariants
 
 ### KCA-INV-01 — No authority promotion
 Transmission does not confer canonical authority.
@@ -256,7 +329,16 @@ Evidence must retain provenance; neither should be silently reduced to generic m
 ### KCA-INV-10 — Snapshot is bounded representation
 A communicated snapshot must carry enough boundary/context semantics to avoid being confused with complete persistent state.
 
-## 8. Decoupling implication
+### KCA-INV-11 — Knowledge communication must not create a second KOS ontology
+KOS knowledge communicated through KCA remains semantically rooted in the existing canonical model; KCA-specific envelopes or information units are transport/interoperability structures, not replacement canonical roots.
+
+### KCA-INV-12 — Observation is not hydration
+Receiving/observing a remote representation must not implicitly insert or hydrate it into the receiver's durable knowledge store.
+
+### KCA-INV-13 — Identity, representation revision and lineage are independent dimensions
+KCA must be capable of carrying these dimensions separately when present.
+
+## 9. Decoupling implication
 
 KOS compatibility should be implemented through a binding/profile rather than by making KOS classes mandatory KCA primitives.
 
@@ -272,14 +354,20 @@ Encoding / KCP / KSCL
 
 A non-KOS system must be able to implement the neutral KCA contracts without implementing `CanonicalObject` internally, while a KOS binding must preserve KOS identity, authority, evidence, provenance and derivation semantics.
 
-## 9. Evidence status
+The accredited KM-0001 result strengthens this separation: KCA must also avoid becoming a second ontological root inside KOS.
 
-The EP-0001 documents inspected here include both baseline statements and historically provisional decisions. The next reconstruction steps must inspect implementation and test evidence before promoting provisional findings to final KOS compatibility requirements.
+## 10. Evidence status
 
-## 10. Next investigation
+The early EP-0001 documents include both baseline statements and historically provisional decisions. KM-0001 TST-0001, however, provides formally closed/accredited evidence for canonical knowledge specialization, stable identity across versioned representations, repository/persistence separation, non-hydrating observation and reuse of canonical relation/evidence capabilities.
 
-1. Inspect EP-0001 implementation/reference model and evidence for canonical identity and relationship canonicalisation.
-2. Inspect state-evolution tests and evidence.
-3. Recover KM-0001 TST increments for transactional lifecycle, evidence/provenance, Persistent Cognitive State and Observation Boundary.
-4. Build the formal KOS Information Object Taxonomy and Authority/Ownership Matrix.
-5. Only after those checks begin the neutral KCA information model specification.
+Relationship canonicalisation and full revision/lineage semantics still require inspection of their later implementation/evidence before being promoted from historical design findings to accredited KOS requirements.
+
+## 11. Next investigation
+
+1. Recover and inspect TST-0002 — Revision and Lineage Contract.
+2. Determine whether first-class canonical relationship identity became implemented/accredited and in what final form.
+3. Recover TST-0003 — Knowledge Evidence / Provenance.
+4. Recover TST-0004 — Persistent Cognitive State / Observation.
+5. Recover TST-0005 — Observation Boundary.
+6. Build the formal KOS Information Object Taxonomy and Authority/Ownership Matrix.
+7. Only after those checks begin the neutral KCA information model specification.
