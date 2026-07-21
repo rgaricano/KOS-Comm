@@ -1,0 +1,69 @@
+KSCL-EXPERIMENTAL/0.1
+
+current_id: KOS-COMM-CURRENT
+source_checkpoint: KOS-COMM-2026-07-21-AR2-REENTRY
+repository: rgaricano/KOS-Lab
+branch: KOS-Comn
+language: es
+
+architectural_state:
+  gate_0: PASS
+  reconciliation: CLOSED
+  ar_1: CLOSED_PASS
+  ar_2: ACTIVE
+  ar_3: PENDING
+  gate_a: PENDING
+
+active_item:
+  id: AR-2
+  name: Modelo de representación / Representation Model
+  position: initial model complete; validation pass pending
+
+invariants:
+  - KOS-Lab authority preserved
+  - KOS-Comm autonomy preserved
+  - Binding = bilateral seam
+  - KCA = neutral target
+  - KCP = small and replaceable
+  - KSCL = experimental/open decomposition
+  - receipt != canonical import
+  - communication != authority
+  - representation != represented object
+  - representation != authority
+  - reconstruction != authorization
+  - promotion = evidence + governance
+
+working_documents:
+  - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
+  - docs/kos-comn/REENTRY-GUIDE.es.md
+  - docs/kos-comn/REENTRY-GUIDE.en.md
+  - docs/kos-comn/REENTRY-CHECKPOINT.es.md
+
+next_action:
+  id: AR-2-VALIDATION-PASS-1
+  description_es: Ejecutar los 12 casos iniciales de validación y refinar taxonomía/capacidades semánticas.
+  description_en: Run the 12 initial validation cases and refine taxonomy/semantic capabilities.
+  decision_target: common structure vs semantic capability model
+
+open_focus:
+  - representation class taxonomy
+  - claim/evidence/verified guarantee distinction
+  - provenance requirements
+  - scoped completeness
+  - neutral reference semantics
+  - minimum semantic context
+  - RepresentationEnvelope status
+
+reentry_rule:
+  - verify actual Git HEAD before development
+  - reconcile CURRENT.kscl against later commits/documents
+  - do not infer authority from this record
+
+assertions:
+  - CURRENT.kscl is mutable continuity state
+  - checkpoint is historical snapshot
+  - KSCL continuity != architectural authority
+  - KSCL reconstruction != proof
