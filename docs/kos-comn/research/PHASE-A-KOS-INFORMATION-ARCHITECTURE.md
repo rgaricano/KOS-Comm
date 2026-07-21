@@ -76,8 +76,6 @@ Identity
 └── namespace/domain
 ```
 
-The exact identifier system remained subject to later formalisation in this historical document.
-
 ### Finding A-007 — Identity, state, persisted representation and contextual projection are distinct
 
 ```text
@@ -190,11 +188,7 @@ The working hypothesis is that evolution can be represented as a referential gra
 
 ## 7. KM-0001 accredited Persistent Knowledge findings
 
-Historical branch head inspected: `engineering/KM-0001-persistent-knowledge-model`, commit `c13e0d56c9be7d5f2e31b3126195961209210ce2`.
-Formal closure inspected: `engineering/KM-0001-TST-0001-CLOSURE-2026-07-20.en.md`.
-
 ### Finding A-021 — No second ontological root for knowledge [ACCREDITED]
-TST-0001 formally accredits the hypothesis that persistent knowledge can use the existing Canonical Object model without introducing a `KnowledgeObject` root class or a parallel canonical model.
 
 ```text
 Knowledge Object
@@ -203,19 +197,14 @@ Knowledge Object
     + domain contracts
 ```
 
-This is a major KCA compatibility constraint: a KOS binding must not introduce a parallel identity/ontology merely to communicate knowledge.
-
 ### Finding A-022 — Canonical identity survives representation versioning [ACCREDITED]
-The accredited increment confirms that `canonical_id` remains stable across versioned representations and that changing `Version` does not alter canonical identity.
-KCA consequence: wire/encoding revision and object representation revision must not silently mutate source identity.
+`canonical_id` remains stable across versioned representations.
 
 ### Finding A-023 — Active repository and durable persistence are separate [ACCREDITED]
-TST-0001 confirms that active repository state and durable persistence are distinct and that observing active state does not implicitly hydrate objects from persistence.
-KCA consequence: remote observation must not imply remote hydration/import. Observation, retrieval and incorporation need separate semantics.
+Observing active state does not implicitly hydrate objects from persistence.
 
 ### Finding A-024 — Relations and evidence reuse canonical capabilities [ACCREDITED]
-Persistent Knowledge does not define parallel relation/evidence systems. It reuses existing canonical capabilities.
-KCA consequence: the KOS binding should map canonical relations/evidence consistently rather than create protocol-only substitutes that lose canonical semantics.
+Persistent Knowledge does not define parallel relation/evidence systems.
 
 ### Finding A-025 — Identity, representation version and historical lineage are distinct [ACCREDITED BOUNDARY]
 
@@ -227,34 +216,14 @@ representation version
 persistent reconstructable historical lineage
 ```
 
-At TST-0001 closure, identity and versioning were accredited, but complete persistent reconstructable revision history was not yet accredited.
-
-### Evidence accreditation — TST-0001
-
-```text
-tests/test_persistent_knowledge_conformance.py
-8 PASS / 0 FAIL / 0 ERROR
-
-Full regression:
-1110 observed
-1110 PASS
-0 FAIL
-0 ERR
-```
-
-Tested commit: `a24e15385fe2227212e9509a24715f1e873fb423`.
+TST-0001 dedicated family: `8 PASS / 0 FAIL / 0 ERROR`.
+Full regression: `1110 PASS / 0 FAIL / 0 ERR`.
 
 ## 8. KM-0001 TST-0002 transactional lifecycle findings
 
-Recovered branch by direct ref resolution despite branch-search miss: `engineering/KM-0001-TST-0002-transactional-lifecycle`.
-
-The branch is six commits ahead of the TST-0001 branch head and contains design, closure, dedicated tests and reproducible evidence.
-
-Important naming correction: the actual TST-0002 is **Persistent Knowledge Transactional Lifecycle Conformance**, not a general Revision and Lineage implementation. TST-0001 had identified lineage as the next boundary to inspect, but cumulative inspection resulted in a narrower accredited transactional contract while explicitly retaining complete historical lineage as unsolved.
+Recovered branch: `engineering/KM-0001-TST-0002-transactional-lifecycle`.
 
 ### Finding A-026 — Four identity/revision dimensions are orthogonal [ACCREDITED]
-
-TST-0002 accredits:
 
 ```text
 canonical_id
@@ -266,61 +235,22 @@ persistent transactional revision
 operation_id
 ```
 
-Semantics:
-
-```text
-canonical_id
-    = stable object identity
-
-Version.version_id / previous_version
-    = semantic version and declared semantic predecessor
-
-persistent registry revision
-    = infrastructure transactional revision
-
-operation_id
-    = transactional/idempotent operation identity
-```
-
-KCA consequence: communication correlation/idempotency identifiers must never be overloaded as canonical identity, semantic version or persistent revision.
-
 ### Finding A-027 — Transactional publication does not redefine semantic version [ACCREDITED]
-
-A valid persistent write can increment the registry transactional revision independently from `Version.version_id`.
-
-Transactional revision protects publication/concurrency. It does not describe the semantic evolution of the knowledge object.
-
-KCA consequence: transport sequencing, exchange revision or delivery attempt counters cannot substitute for semantic object revision.
+Transactional revision protects publication/concurrency. It does not describe semantic evolution.
 
 ### Finding A-028 — Canonical identity survives transactional update [ACCREDITED]
-
-A knowledge representation can be transactionally updated while preserving `canonical_id`, semantic role and semantic version semantics.
-
-Persistence round-trip and independent reconstruction preserve identity, type, namespace/domain, `Version`, and `previous_version`.
+Persistence/reconstruction preserve canonical identity, semantic role, `Version`, and `previous_version`.
 
 ### Finding A-029 — Optimistic concurrency protects persisted knowledge [ACCREDITED]
-
-Writes using stale `expected_revision` are rejected, and a rejected conflict preserves the last valid persisted state.
-
-KCA consequence: if KCA later supports remote mutation/publication, preconditions and conflict semantics must be explicit rather than inferred from transport success.
+Stale `expected_revision` writes are rejected and do not corrupt the last valid state.
 
 ### Finding A-030 — Operation identity provides idempotency, not knowledge identity [ACCREDITED]
-
-Retrying the same transactional operation using the same `operation_id` does not duplicate the transition.
-
-KCA consequence: KCP should be free to define exchange/operation identity for correlation and idempotency, but that identity belongs to the communication/operation plane.
+Repeated `operation_id` does not duplicate the transition.
 
 ### Finding A-031 — Temporal relation does not imply lineage [ACCREDITED NON-REGRESSION]
-
-The cumulative contract explicitly protects the invariant that a temporal relation does not implicitly create a lineage edge.
-
-This is decisive for KCA: timestamps, ordering, `before/after`, receipt order or causal proximity must not be interpreted automatically as semantic predecessor/successor relationships.
+Temporal ordering does not implicitly create a lineage edge.
 
 ### Finding A-032 — `previous_version` is an explicit semantic predecessor, but not complete lineage [ACCREDITED BOUNDARY]
-
-`previous_version` survives persistence and reconstruction and declares a semantic predecessor. It is neither transactional revision nor operation identity.
-
-However, TST-0002 explicitly does **not** accredit a complete navigable history of all prior semantic representations.
 
 ```text
 preserved previous_version
@@ -328,44 +258,209 @@ preserved previous_version
 complete historical revision store
 ```
 
-Atomic registry reconstruction and historical knowledge-lineage reconstruction are related but distinct contracts.
+TST-0002 dedicated family: `10 PASS / 0 FAIL / 0 ERROR`.
+Full regression: `1120 PASS / 0 FAIL / 0 ERR`.
+Tested commit: `9e3d3863010df6ea671bfaaae7cd6df9ae37114b`.
 
-Therefore KCA must be able to preserve an explicit predecessor reference when supplied without assuming that it has received or can navigate the entire lineage graph.
+## 9. KM-0001 TST-0003 relations, evidence and provenance findings
 
-### Evidence accreditation — TST-0002
+Recovered directly: `engineering/KM-0001-TST-0003-knowledge-evidence-provenance`.
+
+The branch is six commits ahead of TST-0002 and contains design, formal closure, dedicated tests and reproducible evidence.
+
+Actual accredited increment name: **Knowledge Relations, Evidence and Provenance Composition**.
+
+### Finding A-033 — Knowledge relation/evidence composition reuses canonical capabilities [ACCREDITED]
+
+The accredited composition is:
+
+```text
+Knowledge Object
+    = CanonicalObject with a knowledge semantic role
+
+Knowledge Relation
+    = canonical relation with knowledge semantics
+
+Knowledge Evidence
+    = inline Evidence
+      or CanonicalObject with an evidence role/type
+
+Knowledge Provenance
+    = explicit provenance associated with evidence
+      or provenance of a derived projection
+```
+
+No new `KnowledgeRelation` or `KnowledgeEvidence` root classes are required.
+
+KCA consequence: the neutral communication model may need generic relation/evidence constructs, but a KOS binding must map them onto the existing canonical model rather than manufacture protocol-owned knowledge ontologies.
+
+### Finding A-034 — Relation, evidence, provenance and lineage are semantically independent [ACCREDITED]
+
+```text
+relation
+    !=
+evidence
+    !=
+provenance
+    !=
+lineage
+```
+
+Semantics:
+
+- relation connects objects semantically;
+- evidence supports, justifies or observes a representation;
+- provenance describes origin, derivation or production context;
+- lineage expresses explicit continuity/revision.
+
+KCA consequence: these concepts require distinct semantic roles even if an encoding later permits compact co-location.
+
+### Finding A-035 — Evidence can be inline or independently canonical [ACCREDITED]
+
+A knowledge object may contain inline evidence or reference a canonical evidence object through `evidence_refs`.
+
+Evidence resolution can compose both forms without losing canonical evidence identity.
+
+This implies at least two communication patterns:
+
+```text
+Inline evidence
+KnowledgeRepresentation
+└── evidence[]
+
+Referenced evidence
+KnowledgeRepresentation
+└── evidence_ref[] ──> EvidenceRepresentation
+```
+
+KCA must not assume that all evidence is embedded or that all evidence possesses independent canonical identity.
+
+### Finding A-036 — Shared canonical evidence must not be duplicated structurally [ACCREDITED]
+
+One canonical evidence object can support multiple knowledge objects while retaining a single canonical identity.
+
+```text
+Knowledge A ──evidence_ref──┐
+                            ├──> Evidence E
+Knowledge B ──evidence_ref──┘
+```
+
+This strengthens the requirement for reference-oriented graph communication. Serialization convenience must not silently clone an identity-bearing evidence object into multiple semantically independent objects.
+
+### Finding A-037 — Evidence identity, evidence reference and inline content are different [ACCREDITED]
+
+TST-0003 explicitly keeps distinct:
+
+```text
+knowledge identity
+evidence identity
+evidence reference
+inline evidence content
+```
+
+KCA consequence: a reference to evidence is not the evidence itself, and inline evidence must not be assigned source canonical identity unless such identity is explicitly present.
+
+### Finding A-038 — Evidence provenance can be persistent semantic information [ACCREDITED]
+
+Provenance associated with serializable/persistent evidence survives persistence and reconstruction.
+
+Therefore evidence provenance may legitimately cross a KCA boundary as part of the evidence semantics.
+
+This does not mean provenance is authority or truth. It describes origin/production context and remains associated with the evidential assertion.
+
+### Finding A-039 — Projection provenance remains derived [ACCREDITED BOUNDARY]
+
+Projection provenance describes how a cognitive projection was obtained.
+
+It does not implicitly become:
+
+```text
+canonical identity
+knowledge object
+persistent evidence
+semantic relation
+lineage edge
+```
+
+KCA consequence: provenance attached to a transmitted projection must preserve its derivation role. Receiving or serializing it must not promote it into canonical source evidence.
+
+### Finding A-040 — Provenance does not confer canonical authority [DERIVED KCA CONSEQUENCE]
+
+Combining A-003, A-009 and TST-0003 yields:
+
+```text
+provenance present
+        !=
+source authoritative
+        !=
+receiver canonical
+        !=
+claim true
+```
+
+Provenance improves traceability and interpretability; it does not by itself establish truth or receiver-side authority.
+
+This distinction must become explicit in the future KCA Authority/Ownership Matrix.
+
+### Finding A-041 — Canonical relations survive persistence and endpoint reconstruction [ACCREDITED]
+
+Canonical relations can connect knowledge objects without a parallel relation class, and relation endpoints remain resolvable after reconstruction.
+
+This provides accredited support for referential graph reconstruction rather than recursive structural embedding.
+
+### Finding A-042 — Temporal relation remains distinct from lineage [ACCREDITED NON-REGRESSION]
+
+The full TST-0003 regression retains `test_temporal_relation_does_not_create_lineage_edge`.
+
+Evidence/provenance composition therefore does not weaken the explicit-lineage boundary established earlier.
+
+### Evidence accreditation — TST-0003
 
 Dedicated family:
 
 ```text
-tests/test_persistent_knowledge_transactional_lifecycle.py
+tests/test_persistent_knowledge_evidence_provenance.py
 10 PASS / 0 FAIL / 0 ERROR
 ```
+
+The family accredits:
+
+- referenced canonical evidence resolution;
+- inline evidence preservation;
+- inline + canonical evidence composition;
+- shared canonical evidence reuse without structural duplication;
+- persistence/reconstruction of evidence composition;
+- canonical knowledge relations;
+- relation endpoint reconstruction;
+- relation/evidence semantic separation;
+- inline evidence provenance persistence;
+- projection provenance / canonical identity separation.
 
 Full regression:
 
 ```text
-1120 observed
-1120 PASS
+1130 observed
+1130 PASS
 0 FAIL
 0 ERR
 Return code: 0
 Verification errors: none
 ```
 
-Tested commit: `9e3d3863010df6ea671bfaaae7cd6df9ae37114b`.
+Tested commit: `987151ee49a948a1b275a50a04844f5aeb8fcd7b`.
 
-Production changes:
+Production impact:
 
 ```text
 Changes in src/: 0
+New knowledge root classes: 0
+New parallel relation ontologies: 0
 New persistence engines: 0
-New knowledge identity: 0
-Canonical model duplication: 0
 ```
 
-The cumulative infrastructure was sufficient.
+Cumulative infrastructure was sufficient.
 
-## 9. Initial KCA compatibility invariants
+## 10. Initial KCA compatibility invariants
 
 ### KCA-INV-01 — No authority promotion
 Transmission does not confer canonical authority.
@@ -418,7 +513,22 @@ An explicit predecessor reference may be communicated without implying that the 
 ### KCA-INV-17 — Persistence conflict semantics are independent from transport delivery
 Successful packet/message delivery does not imply successful persistent publication. If remote publication is supported, its preconditions, conflicts and resulting persistent revision must be represented separately.
 
-## 10. Decoupling implication
+### KCA-INV-18 — Relation, evidence, provenance and lineage are independent semantic roles
+Communication structures must not collapse semantic connection, evidential support, origin/derivation and revision continuity into one generic link or metadata mechanism.
+
+### KCA-INV-19 — Evidence may be inline or referenced
+KCA must permit evidence without independent identity as well as references to independently identifiable evidence when the source model provides it.
+
+### KCA-INV-20 — Shared identity-bearing evidence is referenceable, not duplicative
+When the same evidence identity supports multiple communicated objects, the communication model must permit shared reference semantics without requiring identity-destroying structural copies.
+
+### KCA-INV-21 — Provenance does not confer authority
+Communicated provenance improves traceability but does not automatically make the representation authoritative, canonical at the receiver, or true.
+
+### KCA-INV-22 — Projection provenance remains projection provenance
+Derivation metadata for a projection does not implicitly become source knowledge, persistent evidence, canonical identity, relation or lineage merely because it is transmitted.
+
+## 11. Decoupling implication
 
 KOS compatibility should be implemented through a binding/profile rather than by making KOS classes mandatory KCA primitives.
 
@@ -432,13 +542,30 @@ KCA Neutral Information Model
 Encoding / KCP / KSCL
 ```
 
-A non-KOS system must be able to implement the neutral KCA contracts without implementing `CanonicalObject` internally, while a KOS binding must preserve KOS identity, authority, evidence, provenance, derivation, semantic version and explicit lineage semantics.
+A non-KOS system must be able to implement neutral KCA contracts without implementing `CanonicalObject` internally.
 
-The accredited KM-0001 results strengthen this separation: KCA must avoid becoming a second ontological root inside KOS and must keep its operational identity/revision plane separate from source semantic identity/versioning.
+A KOS binding, however, must preserve where present:
 
-## 11. Evidence status
+```text
+canonical identity
+semantic version
+explicit predecessor/lineage reference
+relations
+evidence identity
+inline evidence
+evidence references
+evidence provenance
+projection provenance
+derivation status
+operational identity
+transactional revision semantics
+```
 
-Accredited through TST-0002:
+KCA therefore needs semantic expressiveness without assuming ownership of those semantics.
+
+## 12. Evidence status
+
+Accredited through TST-0003:
 
 - canonical knowledge specialization without a second ontology;
 - stable canonical identity across representations;
@@ -449,23 +576,31 @@ Accredited through TST-0002:
 - transactional persistent revision independent from semantic version;
 - optimistic concurrency protection;
 - operation idempotency independent from knowledge identity;
-- temporal relation does not imply lineage.
+- temporal relation does not imply lineage;
+- canonical knowledge relation composition;
+- relation endpoint reconstruction;
+- inline evidence;
+- referenced canonical evidence;
+- shared evidence without structural duplication;
+- evidence composition persistence/reconstruction;
+- evidence provenance persistence;
+- projection provenance separation from canonical knowledge identity.
 
 Still not accredited as complete:
 
 - complete navigable historical revision store;
 - general lineage ontology / branching-convergence implementation;
-- final first-class relationship canonicalisation status;
-- knowledge evidence/provenance contract;
+- final status of all historical first-class relationship design claims beyond the composition contract;
 - Persistent Cognitive State observation contract;
-- Observation Boundary contract.
+- Observation Boundary contract;
+- receiver-side import/promotion/authority policy for communicated knowledge.
 
-## 12. Next investigation
+## 13. Next investigation
 
-1. Recover `engineering/KM-0001-TST-0003-knowledge-evidence-provenance`.
-2. Determine the final accredited evidence/provenance semantics and authority consequences.
-3. Recover `engineering/KM-0001-TST-0004-persistent-cognitive-state-observation`.
-4. Recover `engineering/KM-0001-TST-0005-observation-boundary`.
-5. Cross-check relationship canonicalisation against implementation/tests.
+1. Recover `engineering/KM-0001-TST-0004-persistent-cognitive-state-observation`.
+2. Determine exactly what constitutes observable Persistent Cognitive State versus active repository state and derived observation.
+3. Recover `engineering/KM-0001-TST-0005-observation-boundary`.
+4. Determine observation-boundary identity, completeness, selection and projection semantics.
+5. Cross-check remaining relationship canonicalisation claims against implementation/tests where necessary.
 6. Build the formal KOS Information Object Taxonomy and Authority/Ownership Matrix.
 7. Only after those checks begin the neutral KCA information model specification.
