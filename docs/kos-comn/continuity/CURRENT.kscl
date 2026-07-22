@@ -13,15 +13,16 @@ architectural_state:
   ar_2: CLOSED_PASS
   ar_3: CLOSED_PASS
   gate_a: PASS
-  phase_2: ACTIVE
-  ar_4: ACTIVE_INITIAL_MODEL_ESTABLISHED
-  ar_5: PENDING
-  gate_b: PENDING
+  phase_2: CLOSED
+  ar_4: CLOSED_PASS
+  ar_5: CLOSED_PASS
+  gate_b: PASS
+  phase_3: READY
 
 active_item:
-  id: AR-4
-  name: Modelo de Reconstrucción / Reconstruction Model
-  position: initial model established; validation pass 1 next
+  id: PHASE-III
+  name: Specification & Implementation Readiness
+  position: Phase II closed; foundation stabilized; next phase ready
 
 invariants:
   - KOS-Lab authority preserved
@@ -45,84 +46,87 @@ invariants:
   - KOS Binding = domain-specific realization, not neutral core
   - encoding remains outside reconstruction semantics
   - KCP remains outside reconstruction semantics
-  - KSCL remains experimental/open decomposition pending AR-5
+  - KSCL remains experimental/open decomposition pending implementation specifics
+  - any new KSCL construction must be expressible as a specialization or composition of the core categories
+  - semantic dependencies are acyclic
+  - operations never define semantics
 
-ar_4_initial_model:
-  definition: represented information + context + evidence + rules -> reconstruction result
-  candidate_classes:
-    - EXACT
-    - EQUIVALENT
-    - PARTIAL
-    - DEGRADED
-    - AMBIGUOUS
-    - IMPOSSIBLE
-  result_fields:
-    - status
-    - artifact
-    - candidates
-    - target_scope
-    - reconstructed_scope
-    - fidelity
-    - property_transitions
-    - evidence_refs
-    - provenance
-    - diagnostics
-  evidence_classes:
-    - REPRESENTED_EVIDENCE
-    - CONTEXTUAL_EVIDENCE
-    - LOCAL_INDEPENDENT_EVIDENCE
-    - DERIVED_EVIDENCE
-
-working_documents:
-  - docs/kos-comn/architecture/GATE-A-ASSESSMENT.es.md
-  - docs/kos-comn/architecture/GATE-A-ASSESSMENT.en.md
-  - docs/kos-comn/architecture/AR-4-RECONSTRUCTION-MODEL.es.md
-  - docs/kos-comn/architecture/AR-4-RECONSTRUCTION-MODEL.en.md
-
-next_action:
-  id: AR-4-VALIDATION-PASS-1
-  description_es: Validar el modelo inicial de reconstrucción mediante los doce casos previstos y resolver la relación entre estado, clase, alcance, fidelidad, ambigüedad y parcialidad.
-  description_en: Validate the initial Reconstruction Model through the twelve planned cases and resolve the relationship among status, class, scope, fidelity, ambiguity and partiality.
-  decision_target: AR-4 VALIDATION PASS 1
-
-ar_4_open_questions:
-  - status vs fidelity/reconstruction class
-  - coexistence of PARTIAL and AMBIGUOUS
-  - multiple candidate representation
-  - DEGRADED vs PARTIAL
-  - minimum ReconstructionScope
-  - conflicting evidence semantics
-  - explicit ReconstructionClaim
-  - successive reconstruction composition
-  - temporal/multi-state reconstruction
-  - AR-5/KSCL consumption boundary
-
-ar_4_validation_cases:
-  - complete representation with equivalent reconstruction
-  - partial representation with partial reconstruction
-  - irreversible loss preventing required reconstruction
-  - two equally compatible candidates
-  - new local evidence restoring a property
-  - conflicting evidence from two sources
-  - correct reconstruction not authorized by domain
-  - neutral reconstruction without Binding
-  - reconstruction followed by Binding toward KOS
-  - historical state reconstruction versus current state
-  - reconstruction chain with accumulated degradation
-  - target scope smaller than available information
-
-phase_2_plan:
+closed_items:
+  - Gate 0 architectural consensus
+  - KOS-Lab <-> KOS-Comm reconciliation
+  - AR-1 Boundary Model
+  - AR-2 Representation Model
+  - AR-3 Binding Model
+  - Gate A / Phase I
   - AR-4 Reconstruction Model
   - AR-5 KSCL Decomposition
-  - Gate B
+  - Gate B / Foundation phase
 
-reopen_gate_a_if:
-  - AR-4 requires incompatible reconstruction ownership transfer into AR-3
-  - reconstruction requires fundamental AR-2 semantic change
-  - AR-1 cannot express required property transitions
-  - circular authority/dependency appears
-  - conceptual non-KOS neutrality fails
-  - encoding or transport becomes inseparable from Phase I semantic core
+phase_1_result:
+  status: CLOSED_PASS
+  gate_a: PASS
+  components:
+    ar_1: CLOSED_PASS
+    ar_2: CLOSED_PASS
+    ar_3: CLOSED_PASS
+  authority_cycles: NONE_IDENTIFIED
+  neutral_non_kos_realization: CONCEPTUALLY_FEASIBLE
+  reconstruction_ownership: OUTSIDE_PHASE_1
+  encoding_ownership: OUTSIDE_PHASE_1
+  kcp_ownership: OUTSIDE_PHASE_1
+
+phase_2_result:
+  status: CLOSED_PASS
+  gate_b: PASS
+  components:
+    ar_4: CLOSED_PASS
+    ar_5: CLOSED_PASS
+  semantic_closure: PASS
+  cross_domain_review: PASS
+  cross_technology_review: PASS
+  future_evolution_review: PASS
+  ai_compatibility: PASS
+  distributed_architecture: PASS
+  governance_separation: PASS
+
+kscl_core:
+  atoms:
+    - Entity
+    - Reference
+    - PropertyDefinition
+    - PropertyValue
+    - PropertyStrength
+    - Representation
+    - Evidence
+    - Origin
+    - Lineage
+  assertions:
+    - Correlation
+    - Support
+    - Transition
+    - Compatibility
+  evaluations:
+    - Resolution
+    - Coverage
+    - Fidelity
+  operations:
+    - Reconstruction
+    - Binding
+    - Assessment
+
+working_documents:
+  - docs/kos-comn/architecture/AR-4-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-4-CLOSURE.en.md
+  - docs/kos-comn/architecture/AR-5-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-5-CLOSURE.en.md
+  - docs/kos-comn/architecture/GATE-B-ASSESSMENT.es.md
+  - docs/kos-comn/architecture/GATE-B-ASSESSMENT.en.md
+
+next_action:
+  id: PHASE-III-SPECIFICATION
+  description_es: Iniciar la fase de especificación normativa e implementación sobre el núcleo KSCL estabilizado.
+  description_en: Start normative specification and implementation work on the stabilized KSCL core.
+  decision_target: PHASE_III_READY
 
 reentry_rule:
   - verify actual Git HEAD before development
@@ -135,3 +139,4 @@ assertions:
   - KSCL continuity != architectural authority
   - KSCL reconstruction != proof
   - Gate A PASS != KOS-Lab integration authorization
+  - Gate B PASS != production readiness
