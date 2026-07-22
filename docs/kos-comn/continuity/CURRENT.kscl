@@ -10,14 +10,14 @@ architectural_state:
   gate_0: PASS
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
-  ar_2: ACTIVE_VALIDATION_PASS_1_COMPLETE
+  ar_2: ACTIVE_REFINEMENT_PASS_2_COMPLETE
   ar_3: PENDING
   gate_a: PENDING
 
 active_item:
   id: AR-2
   name: Modelo de representación / Representation Model
-  position: validation pass 1 complete; refinement pass 2 pending
+  position: refinement pass 2 complete; final review / closure assessment pending
 
 invariants:
   - KOS-Lab authority preserved
@@ -40,59 +40,55 @@ working_documents:
   - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
   - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.es.md
   - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.en.md
-  - docs/kos-comn/REENTRY-GUIDE.es.md
-  - docs/kos-comn/REENTRY-GUIDE.en.md
-  - docs/kos-comn/REENTRY-CHECKPOINT.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.en.md
 
-validated_findings:
-  - 12 initial AR-2 cases are modelable
-  - rigid representation class taxonomy rejected as core
-  - extensible classification retained
-  - minimal common semantic core is candidate
-  - semantic capabilities are primary candidate
-  - RepresentationEnvelope remains logical reference model only
-  - provenance capability is core but completeness may vary
-  - COMPLETE requires declared scope
-  - Claim, Evidence, Verification and Guarantee remain distinct
-  - SubjectDescriptor must not require a universal global identifier
-
-candidate_model:
-  formula: MINIMAL_COMMON_CORE + SEMANTIC_CAPABILITIES + EXTENSIBLE_CLASSIFICATION
-  core:
-    - representation_identity
+closure_candidate:
+  formula: MINIMAL_SEMANTIC_CORE + DECLARED_SEMANTIC_CAPABILITIES + OPTIONAL_EXTENSIBLE_CLASSIFICATION
+  mandatory_core:
     - subject
     - semantic_context
-    - provenance
     - capabilities
     - content
-  capabilities:
-    - SUBJECT_IDENTIFICATION
-    - REFERENCE_SEMANTICS
-    - PROVENANCE
-    - DERIVATION
-    - COVERAGE
-    - TEMPORALITY
-    - RELATIONSHIPS
-    - COMPOSITION
-    - PROPERTY_CLAIMS
-    - EVIDENCE_LINKAGE
-    - VERIFICATION_STATEMENTS
-    - RECONSTRUCTION_INFORMATION
+  conditional_core:
+    - representation_identity
+    - provenance
+    - classification
+  capability_criticality:
+    - REQUIRED_FOR_INTERPRETATION
+    - REQUIRED_FOR_DECLARED_PROPERTY
+    - OPTIONAL
+    - INFORMATIONAL
+  interpretation_states:
+    - FULL
+    - DEGRADED
+    - UNINTERPRETABLE
+
+refined_findings:
+  - representation_identity is conditional, not universally mandatory
+  - no universal global subject identifier is required
+  - unknown capability is not automatically safe to ignore
+  - degradation must be explicit and conservative
+  - unsupported property dependency downgrades property confidence/status
+  - domain extensions may extend but not silently override core semantics
+  - composition cannot elevate guarantees without justified composition rules
+  - semantic criticality remains separate from protocol negotiation
+  - Claim, Evidence, Verification and Guarantee are distinct
 
 next_action:
-  id: AR-2-REFINEMENT-PASS-2
-  description_es: Refinar núcleo semántico mínimo, capacidades, SubjectDescriptor y semántica Claim/Evidence/Verification/Guarantee.
-  description_en: Refine minimum semantic core, capabilities, SubjectDescriptor and Claim/Evidence/Verification/Guarantee semantics.
-  decision_target: prepare AR-2 closure candidate
+  id: AR-2-FINAL-REVIEW
+  description_es: Ejecutar revisión adversarial final y evaluación de cierre de AR-2.
+  description_en: Perform final adversarial review and AR-2 closure assessment.
+  decision_target: CLOSE_AR_2_OR_REWORK
 
-open_focus:
-  - exact minimum-core membership
-  - representation_identity requirement for ephemeral representations
-  - safe capability extensibility and ignorability
-  - minimum SubjectDescriptor semantics
-  - formal Claim/Evidence/Verification/Guarantee relationships
-  - neutral-core protection from domain extensions
-  - complex degradation/composition validation
+adversarial_cases:
+  - unknown critical capability
+  - composition with degraded component
+  - ephemeral representation without identity
+  - subject without global identifier
+  - undisclosed provenance
+  - guarantee dependent on unsupported capability
+  - conflicting domain extension
 
 reentry_rule:
   - verify actual Git HEAD before development
