@@ -10,13 +10,13 @@ architectural_state:
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
   ar_2: CLOSED_PASS
-  ar_3: ACTIVE_ADVERSARIAL_PASS_2_COMPLETE
-  gate_a: PENDING
+  ar_3: CLOSED_PASS
+  gate_a: READY_FOR_ASSESSMENT
 
 active_item:
-  id: AR-3
-  name: Modelo de Binding / Binding Model
-  position: adversarial pass 2 complete; closure assessment pending
+  id: GATE-A
+  name: Phase I Gate A Assessment
+  position: AR-1/AR-2/AR-3 closed; Gate A assessment next
 
 invariants:
   - KOS-Lab authority preserved
@@ -27,10 +27,9 @@ invariants:
   - candidate != accepted domain state
   - receipt != canonical import
   - identity mapping != identity authority
-  - degradation cannot be silently elevated
   - property strength may increase only with new independent explicit scoped justification/evidence
   - Binding policy = mapping admissibility; Domain policy = authoritative acceptance/action
-  - declared compatibility != runtime mappability
+  - declared contract compatibility != runtime semantic mappability
   - Binding composition safety must be validated, not assumed
   - correlation conflict must remain explicit unless resolved by declared scope/basis
   - binding identity unique within declared interoperability scope
@@ -39,31 +38,20 @@ invariants:
   - KSCL = experimental/open decomposition
   - reconstruction != authorization
 
-ar_3_evidence:
-  initial_model: COMPLETE
-  validation_pass_1:
-    cases: 12
-    passed: 12
-    critical_contradictions: 0
-  adversarial_pass_2:
-    cases: 8
-    passed: 8
-    critical_contradictions: 0
-    core_rework: false
-    closure_candidate: true
+closed_items:
+  - Gate 0 architectural consensus
+  - KOS-Lab <-> KOS-Comm reconciliation
+  - AR-1 Boundary Model
+  - AR-2 Representation Model
+  - AR-3 Binding Model
 
-ar_3_stabilized_refinements:
-  binding_identity: required for interoperable BindingContract and unique within declared scope
-  status_reason_separation: true
-  correlation_conflict: explicit, no silent resolution
-  correlation_persistence: not necessarily owned by Binding
-  policy_boundary: mapping admissibility at Binding; authoritative acceptance/action at Domain
-  compatibility_levels:
-    - DECLARED_CONTRACT_COMPATIBILITY
-    - RUNTIME_SEMANTIC_MAPPABILITY
-  composition: explicit assessment required
-  restoration: only with new independent explicit scoped justification/evidence
-  lifecycle: management/governance metadata, not core invariant
+ar_3_closure:
+  status: CLOSED_PASS
+  total_cases: 20
+  validation_pass_1: 12/12_PASS
+  adversarial_pass_2: 8/8_PASS
+  critical_contradictions: 0
+  core_rework: false
 
 working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
@@ -76,24 +64,27 @@ working_documents:
   - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.en.md
   - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.es.md
   - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.en.md
+  - docs/kos-comn/architecture/AR-3-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-3-CLOSURE.en.md
 
 next_action:
-  id: AR-3-CLOSURE-ASSESSMENT
-  description_es: Revisar criterios finales, producir cierre bilingüe de AR-3 si procede y preparar evaluación de Gate A.
-  description_en: Review final criteria, produce bilingual AR-3 closure if appropriate, and prepare Gate A assessment.
-  decision_target: CLOSE_AR_3_OR_REWORK
+  id: GATE-A-ASSESSMENT
+  description_es: Evaluar conjuntamente AR-1, AR-2 y AR-3 para determinar si Phase I puede cerrarse y habilitar Phase II — Reconstruction Semantics.
+  description_en: Jointly assess AR-1, AR-2 and AR-3 to determine whether Phase I can close and enable Phase II — Reconstruction Semantics.
+  decision_target: GATE_A_PASS_REWORK_OR_FAIL
 
-closure_checks:
-  - explicit bilateral seam preserved
-  - authority separation preserved
-  - AR-1 property transitions preserved
-  - AR-2 criticality/degradation preserved
-  - identity and correlation semantics bounded
-  - compatibility and runtime mappability separated
-  - composition explicitly assessed
-  - policy boundary preserved
-  - non-KOS realization feasible
-  - encoding and transport remain out of AR-3
+gate_a_checks:
+  - Boundary Model closed and coherent
+  - Representation Model closed and neutral
+  - Binding Model closed and authority-safe
+  - AR-1/AR-2/AR-3 semantic interfaces coherent
+  - no circular authority/dependency introduced
+  - KOS-specific realization remains outside neutral core
+  - non-KOS realization conceptually feasible
+  - reconstruction remains outside Phase I ownership
+  - encoding remains outside Phase I ownership
+  - KCP remains outside Phase I ownership
+  - residual risks are non-blocking for Phase II
 
 reentry_rule:
   - verify actual Git HEAD before development
