@@ -4,6 +4,10 @@
 
 **Date:** 2026-07-22
 
+## Session status
+
+**FORMALLY CLOSED — BASELINE 1.0 PERSISTED**
+
 ## Context reconstructed
 
 The work concerns the information and communications subsystem of KOS, originally centered on KCP and KSCL.
@@ -59,6 +63,8 @@ Consumers
 7. Data-plane and control-plane separation must be developed explicitly.
 8. Repository persistence is mandatory after significant architectural work.
 9. The branch `KOS-Comn` keeps the KCA/KRM/KEncoding/KCP/KSCL/CP line as the working reference until the first structural disambiguation is completed.
+10. `docs/kos-comn/BASELINE-1.0.md` is the frozen release checkpoint for this branch.
+11. `docs/kos-comn/ARCHITECTURE-INDEX.md` defines the reading and authority order for reentry.
 
 ## Persisted documents
 
@@ -67,6 +73,8 @@ Consumers
 - `docs/kos-comn/architecture/KCA.md`
 - `docs/kos-comn/adr/ADR-0001-KCA.md`
 - `docs/kos-comn/SESSION-CONSOLIDATION.md`
+- `docs/kos-comn/BASELINE-1.0.md`
+- `docs/kos-comn/ARCHITECTURE-INDEX.md`
 
 ## Open engineering questions
 
@@ -83,7 +91,7 @@ Consumers
 
 ## Next entry point
 
-Begin **KRM — Knowledge Representation Model**.
+When this branch work resumes, begin **KRM — Knowledge Representation Model**.
 
 The first KRM task is not to invent a new taxonomy. It is to inventory and map the existing KOS concepts relevant to communication:
 
