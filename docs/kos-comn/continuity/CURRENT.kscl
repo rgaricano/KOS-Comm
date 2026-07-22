@@ -8,35 +8,39 @@ language: es
 architectural_state:
   gate_0: PASS
   reconciliation: CLOSED
+  phase_1: CLOSED
   ar_1: CLOSED_PASS
   ar_2: CLOSED_PASS
   ar_3: CLOSED_PASS
-  gate_a: READY_FOR_ASSESSMENT
+  gate_a: PASS
+  phase_2: ENABLED
+  ar_4: READY_TO_START
+  gate_b: PENDING
 
 active_item:
-  id: GATE-A
-  name: Phase I Gate A Assessment
-  position: AR-1/AR-2/AR-3 closed; Gate A assessment next
+  id: AR-4
+  name: Modelo de Reconstrucción / Reconstruction Model
+  position: Gate A passed; Phase II enabled; AR-4 next
 
 invariants:
   - KOS-Lab authority preserved
   - KOS-Comm autonomy preserved
+  - representation != represented object
   - Binding = explicit bilateral semantic seam
-  - bilateral != symmetric or reversible
   - mapping capability != domain authority
   - candidate != accepted domain state
   - receipt != canonical import
+  - reconstruction != authorization
   - identity mapping != identity authority
   - property strength may increase only with new independent explicit scoped justification/evidence
   - Binding policy = mapping admissibility; Domain policy = authoritative acceptance/action
   - declared contract compatibility != runtime semantic mappability
   - Binding composition safety must be validated, not assumed
-  - correlation conflict must remain explicit unless resolved by declared scope/basis
-  - binding identity unique within declared interoperability scope
-  - KCA = neutral target
-  - KCP = small and replaceable
-  - KSCL = experimental/open decomposition
-  - reconstruction != authorization
+  - KCA = neutral core
+  - KOS Binding = domain-specific realization, not neutral core
+  - encoding remains outside Phase I semantic core
+  - KCP remains small, replaceable and outside Phase I semantic core
+  - KSCL remains experimental/open decomposition
 
 closed_items:
   - Gate 0 architectural consensus
@@ -44,47 +48,63 @@ closed_items:
   - AR-1 Boundary Model
   - AR-2 Representation Model
   - AR-3 Binding Model
+  - Gate A / Phase I
 
-ar_3_closure:
+phase_1_result:
   status: CLOSED_PASS
-  total_cases: 20
-  validation_pass_1: 12/12_PASS
-  adversarial_pass_2: 8/8_PASS
-  critical_contradictions: 0
-  core_rework: false
+  gate_a: PASS
+  components:
+    ar_1: CLOSED_PASS
+    ar_2: CLOSED_PASS
+    ar_3: CLOSED_PASS
+  authority_cycles: NONE_IDENTIFIED
+  neutral_non_kos_realization: CONCEPTUALLY_FEASIBLE
+  reconstruction_ownership: OUTSIDE_PHASE_1
+  encoding_ownership: OUTSIDE_PHASE_1
+  kcp_ownership: OUTSIDE_PHASE_1
 
 working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
   - docs/kos-comn/architecture/AR-2-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-2-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-3-BINDING-MODEL.es.md
-  - docs/kos-comn/architecture/AR-3-BINDING-MODEL.en.md
-  - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.es.md
-  - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.en.md
-  - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.es.md
-  - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.en.md
   - docs/kos-comn/architecture/AR-3-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-3-CLOSURE.en.md
+  - docs/kos-comn/architecture/GATE-A-ASSESSMENT.es.md
+  - docs/kos-comn/architecture/GATE-A-ASSESSMENT.en.md
 
 next_action:
-  id: GATE-A-ASSESSMENT
-  description_es: Evaluar conjuntamente AR-1, AR-2 y AR-3 para determinar si Phase I puede cerrarse y habilitar Phase II — Reconstruction Semantics.
-  description_en: Jointly assess AR-1, AR-2 and AR-3 to determine whether Phase I can close and enable Phase II — Reconstruction Semantics.
-  decision_target: GATE_A_PASS_REWORK_OR_FAIL
+  id: AR-4-INITIAL-MODEL
+  description_es: Iniciar el Modelo de Reconstrucción definiendo semántica, clases, requisitos de evidencia, resultados parciales/ambiguos/imposibles y separación respecto de Binding y autoridad.
+  description_en: Start the Reconstruction Model by defining semantics, classes, evidence requirements, partial/ambiguous/impossible outcomes, and separation from Binding and authority.
+  decision_target: AR-4 INITIAL MODEL
 
-gate_a_checks:
-  - Boundary Model closed and coherent
-  - Representation Model closed and neutral
-  - Binding Model closed and authority-safe
-  - AR-1/AR-2/AR-3 semantic interfaces coherent
-  - no circular authority/dependency introduced
-  - KOS-specific realization remains outside neutral core
-  - non-KOS realization conceptually feasible
-  - reconstruction remains outside Phase I ownership
-  - encoding remains outside Phase I ownership
-  - KCP remains outside Phase I ownership
-  - residual risks are non-blocking for Phase II
+ar_4_initial_questions:
+  - what reconstruction means
+  - reconstruction classes
+  - required information/evidence by class
+  - partial reconstruction semantics
+  - ambiguous reconstruction semantics
+  - impossible reconstruction semantics
+  - provenance preservation
+  - degradation propagation
+  - reconstruction vs authorization
+  - reconstruction vs Binding
+  - reconstructed equivalence/fidelity conditions
+  - neutral non-KOS applicability
+
+phase_2_plan:
+  - AR-4 Reconstruction Model
+  - AR-5 KSCL Decomposition
+  - Gate B
+
+reopen_gate_a_if:
+  - AR-4 requires incompatible reconstruction ownership transfer into AR-3
+  - reconstruction requires fundamental AR-2 semantic change
+  - AR-1 cannot express required property transitions
+  - circular authority/dependency appears
+  - conceptual non-KOS neutrality fails
+  - encoding or transport becomes inseparable from Phase I semantic core
 
 reentry_rule:
   - verify actual Git HEAD before development
@@ -96,3 +116,4 @@ assertions:
   - checkpoint is historical snapshot
   - KSCL continuity != architectural authority
   - KSCL reconstruction != proof
+  - Gate A PASS != KOS-Lab integration authorization
