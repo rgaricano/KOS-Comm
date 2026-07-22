@@ -1,6 +1,6 @@
 # NS-1 — KSCL Core Specification
 
-**Status:** WORKING DRAFT  
+**Status:** DRAFT COMPLETE (RC0)  
 **Phase:** Phase III — Normative Specification
 
 ## 1. Scope
@@ -19,7 +19,7 @@ An implementation is KSCL Core conformant if and only if:
 4. The semantic dependency graph is acyclic unless a profile explicitly permits otherwise.
 5. No implementation-specific extension changes the meaning of the core categories.
 
-## 3. Terms and Definitions
+## 3. Vocabulary
 
 ### KSCL-TERM-0010 — Canonical Semantic Input (CSI)
 The canonical semantic representation of all semantic elements required by a Semantic Evaluation after application of every mandatory normalization rule defined by the applicable specification.
@@ -216,9 +216,55 @@ Verification rule: semantically equivalent representations SHALL yield the same 
 
 Required evidence: representation mapping, semantic interpretation report.
 
+### 6.4 Conformance Invariants
+
+#### KSCL-INV-CNF-001
+Conformance SHALL depend exclusively on normative semantic content.
+
+Verification rule: modify only representation-level characteristics; the conformance result SHALL remain unchanged.
+
+Required evidence: conformance report, variant representation set.
+
+#### KSCL-INV-CNF-002
+Semantically Equivalent Canonical Semantic Inputs SHALL produce identical Evaluation Results under identical conformance-relevant conditions.
+
+Verification rule: compare Evaluation Results for equivalent CSIs under identical configuration.
+
+Required evidence: CSI A, CSI B, evaluation configuration, Evaluation Result A, Evaluation Result B, comparison report.
+
+#### KSCL-INV-CNF-003
+Every conformance claim SHALL be supported by objective evidence traceable to the applicable normative identifiers.
+
+Verification rule: each conformance claim SHALL reference the satisfied or failed KSCL-REQ and KSCL-INV identifiers and the associated evidence set.
+
+Required evidence: conformance report, traceability matrix, evidence set.
+
+### 6.5 Evolution Invariants
+
+#### KSCL-INV-EVO-001
+Extensions SHALL NOT redefine the meaning of the core categories.
+
+Verification rule: compare extension semantics against the core category definitions; no meaning change is permitted.
+
+Required evidence: extension specification, compatibility analysis.
+
+#### KSCL-INV-EVO-002
+Any extension SHALL be expressible as a specialization or composition of the core categories.
+
+Verification rule: each extension construct SHALL map to at least one specialization or composition of core categories.
+
+Required evidence: extension mapping report.
+
+#### KSCL-INV-EVO-003
+Normative identifiers SHALL remain stable across semantically equivalent localizations.
+
+Verification rule: localized documents SHALL preserve all KSCL-REQ, KSCL-INV, KSCL-TERM and KSCL-PRI identifiers unchanged.
+
+Required evidence: localization comparison report.
+
 ## 7. Semantic Integrity
 
-### KSCL-PRN-002
+### KSCL-PRI-002
 The semantic integrity of KSCL SHALL be preserved across all conformant semantic models and conformant operations.
 
 ### KSCL-INV-INT-001
@@ -254,6 +300,49 @@ Extensions MAY add new semantic structures only as specializations or compositio
 
 Extensions SHALL NOT redefine the meaning of the core categories.
 
-## 10. Notes
+## 10. Identifier Grammar
+
+### KSCL-NAM-001
+KSCL normative identifiers SHALL use the grammar:
+
+```bnf
+Identifier ::= Namespace "-" Artifact ["-" Domain] "-" Number
+Namespace  ::= "KSCL"
+Artifact   ::= "PRI" | "REQ" | "INV" | "TRM"
+Domain     ::= "IDN" | "DEP" | "STR" | "SEM" | "INT" | "CNF" | "EVO"
+Number     ::= Digit Digit Digit
+```
+
+### KSCL-NAM-002
+Artifact prefixes SHALL mean:
+
+- PRI — Principle
+- REQ — Requirement
+- INV — Invariant
+- TRM — Term
+
+### KSCL-NAM-003
+Domain prefixes SHALL mean:
+
+- IDN — Identity
+- DEP — Dependency
+- STR — Structure
+- SEM — Semantics
+- INT — Integrity
+- CNF — Conformance
+- EVO — Evolution
+
+## 11. Versioning
+
+### KSCL-VRS-001
+Normative version changes SHALL be introduced only through a new major normative version.
+
+### KSCL-VRS-002
+Document version changes SHALL NOT alter normative meaning.
+
+### KSCL-VRS-003
+Localization version changes SHALL preserve identifier stability and normative equivalence.
+
+## 12. Notes
 
 The normative master language is English. Localizations SHALL be semantically equivalent documents with identical identifiers.
