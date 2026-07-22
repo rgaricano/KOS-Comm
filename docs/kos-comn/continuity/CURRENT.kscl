@@ -1,183 +1,99 @@
-KSCL-EXPERIMENTAL/0.1
+KSCL-CURRENT/0.2
 
 current_id: KOS-COMM-CURRENT
 repository: rgaricano/KOS-Lab
 branch: KOS-Comn
 language: es
 
-architectural_state:
-  gate_0: PASS
-  reconciliation: CLOSED
+documents:
+  ns_0:
+    path: docs/kos-comn/normative/NS-0-EDITORIAL-AND-TERMINOLOGY-POLICY.en.md
+    status: ACTIVE
+  ns_1:
+    path: docs/kos-comn/normative/NS-1-KSCL-CORE-SPECIFICATION.en.md
+    status: DRAFT_COMPLETE_RC0
+  ns_2:
+    path: docs/kos-comn/normative/NS-2-KSCL-SEMANTIC-CONSTRUCTS.en.md
+    status: WORKING_DRAFT
+  ns_3:
+    path: docs/kos-comn/normative/NS-3-KSCL-SEMANTIC-CONFORMANCE-FRAMEWORK.en.md
+    status: DRAFT_COMPLETE_RC0
+  ns_4:
+    path: docs/kos-comn/normative/NS-4-KSCL-PROFILES-EXTENSIONS-COMPOSITION.en.md
+    status: DRAFT_COMPLETE_RC0
+  ns_5:
+    path: docs/kos-comn/normative/NS-5-KSCL-SERIALIZATION-SEMANTIC-EXCHANGE.en.md
+    status: DRAFT_COMPLETE_RC0
+  ns_6:
+    path: docs/kos-comn/normative/NS-6-KSCL-VALIDATION-VERIFICATION-CERTIFICATION.en.md
+    status: DRAFT_COMPLETE_RC0
+  ns_7:
+    path: docs/kos-comn/normative/NS-7-KSCL-GOVERNANCE-EVOLUTION-LIFECYCLE.en.md
+    status: DRAFT_COMPLETE_RC0
+
+project_state:
   phase_1: CLOSED
-  ar_1: CLOSED_PASS
-  ar_2: CLOSED_PASS
-  ar_3: CLOSED_PASS
-  gate_a: PASS
   phase_2: CLOSED
-  ar_4: CLOSED_PASS
-  ar_5: CLOSED_PASS
-  gate_b: PASS
   phase_3: ACTIVE
-  ns_0: ACTIVE
-  ns_1: WORKING_DRAFT
+  foundation: CLOSED
+  specification_family: DRAFT_COMPLETE_RC0
 
-active_item:
-  id: NS-1
-  name: KSCL Core Specification
-  position: chapter 7 open; core invariants pending consolidation
+continuity:
+  active_item:
+    id: NS-1
+    name: KSCL Core Specification
+    position: chapter 7 consolidation pending
+  next_action:
+    id: NS-1-CHAPTER-7-CONSOLIDATION
+    description_es: Consolidar los invariantes del núcleo y cerrar provisionalmente NS-1.
+    description_en: Consolidate the core invariants and provisionally close NS-1.
 
-invariants:
-  - KOS-Lab authority preserved
-  - KOS-Comm autonomy preserved
-  - representation != represented object
-  - reconstruction != inversion by default
-  - reconstruction != authorization
-  - reconstructed artifact != accepted/canonical domain state
-  - Binding != Reconstruction
-  - mapping capability != domain authority
-  - candidate != accepted domain state
-  - receipt != canonical import
-  - identity evidence/correlation/claim != identity authority
-  - fidelity claims are relative to explicit scope
-  - unresolved ambiguity must remain explicit
-  - partial reconstruction != failure by definition
-  - property strength may increase only with new independent explicit scoped justification/evidence
-  - provenance of reconstruction is composite when multiple sources/rules participate
-  - historical reconstruction != current-state assertion
-  - KCA = neutral core
-  - KOS Binding = domain-specific realization, not neutral core
-  - encoding remains outside reconstruction semantics
-  - KCP remains outside reconstruction semantics
-  - KSCL remains experimental/open decomposition pending implementation specifics
-  - any new KSCL construction must be expressible as a specialization or composition of the core categories
-  - semantic dependencies are acyclic unless a profile explicitly permits otherwise
-  - operations never define semantics
-  - conformance is determined by normative semantic content
-  - localizations are normative-equivalent documents with identical identifiers
-  - identifiers use prefix grammar PRI/REQ/INV/TRM with optional domain tags
-  - semantic assertions are aseveraciones semánticas in Spanish normative text
+architecture_decisions:
+  architecture_authority: ARCHITECTURE.kscl
+  continuity_authority: CURRENT.kscl
+  decision_registry: DECISIONS.kscl
+  history_registry: HISTORY.kscl
+  frozen_decisions:
+    - identifier_grammar: KSCL-<SECTION>-<DOMAIN>-<NNN>
+    - localization_model: one file per language, semantically equivalent, identifier-stable
+    - glossary_authority: NS-0
+    - core_authority: NS-1
+    - construct_authority: NS-2
+    - conformance_authority: NS-3
+    - profiles_authority: NS-4
+    - serialization_authority: NS-5
+    - validation_authority: NS-6
+    - governance_authority: NS-7
 
-closed_items:
-  - Gate 0 architectural consensus
-  - KOS-Lab <-> KOS-Comm reconciliation
-  - AR-1 Boundary Model
-  - AR-2 Representation Model
-  - AR-3 Binding Model
-  - Gate A / Phase I
-  - AR-4 Reconstruction Model
-  - AR-5 KSCL Decomposition
-  - Gate B / Foundation phase
+governance:
+  session_focus: NS-1 chapter 7 consolidation
+  open_questions:
+    - finalize chapter 7 block structure
+    - verify all identifier families against the frozen grammar
+    - ensure REQ vs INV separation across NS family
+  reentry_rule:
+    - verify actual Git HEAD before development
+    - reconcile CURRENT.kscl against later commits/documents
+    - do not infer authority from this record
 
-phase_1_result:
-  status: CLOSED_PASS
-  gate_a: PASS
-  components:
-    ar_1: CLOSED_PASS
-    ar_2: CLOSED_PASS
-    ar_3: CLOSED_PASS
-  authority_cycles: NONE_IDENTIFIED
-  neutral_non_kos_realization: CONCEPTUALLY_FEASIBLE
-  reconstruction_ownership: OUTSIDE_PHASE_1
-  encoding_ownership: OUTSIDE_PHASE_1
-  kcp_ownership: OUTSIDE_PHASE_1
+references:
+  architecture:
+    - docs/kos-comn/architecture/AR-4-CLOSURE.en.md
+    - docs/kos-comn/architecture/AR-5-CLOSURE.en.md
+    - docs/kos-comn/architecture/GATE-B-ASSESSMENT.en.md
+  normative:
+    - docs/kos-comn/normative/NS-0-EDITORIAL-AND-TERMINOLOGY-POLICY.en.md
+    - docs/kos-comn/normative/NS-1-KSCL-CORE-SPECIFICATION.en.md
+    - docs/kos-comn/normative/NS-2-KSCL-SEMANTIC-CONSTRUCTS.en.md
+    - docs/kos-comn/normative/NS-3-KSCL-SEMANTIC-CONFORMANCE-FRAMEWORK.en.md
+    - docs/kos-comn/normative/NS-4-KSCL-PROFILES-EXTENSIONS-COMPOSITION.en.md
+    - docs/kos-comn/normative/NS-5-KSCL-SERIALIZATION-SEMANTIC-EXCHANGE.en.md
+    - docs/kos-comn/normative/NS-6-KSCL-VALIDATION-VERIFICATION-CERTIFICATION.en.md
+    - docs/kos-comn/normative/NS-7-KSCL-GOVERNANCE-EVOLUTION-LIFECYCLE.en.md
 
-phase_2_result:
-  status: CLOSED_PASS
-  gate_b: PASS
-  components:
-    ar_4: CLOSED_PASS
-    ar_5: CLOSED_PASS
-  semantic_closure: PASS
-  cross_domain_review: PASS
-  cross_technology_review: PASS
-  future_evolution_review: PASS
-  ai_compatibility: PASS
-  distributed_architecture: PASS
-  governance_separation: PASS
-
-phase_3_result:
-  status: ACTIVE
-  documents:
-    ns_0: ACTIVE
-    ns_1: WORKING_DRAFT
-  language_policy:
-    master_language: English
-    localizations: semantically equivalent, identifier-stable
-  glossary_policy:
-    canonical_terms:
-      - KSCL-TERM-0003: Semantic Assertion / Aseveración semántica
-      - KSCL-TERM-0010: Canonical Semantic Input (CSI)
-      - KSCL-TERM-0011: Semantically Equivalent Canonical Semantic Inputs
-      - KSCL-TERM-0012: Evaluation Result
-      - KSCL-TERM-0020: Semantic Dependency
-      - KSCL-TERM-0021: Dependency Closure
-      - KSCL-TRM-0030: Core Invariant
-      - KSCL-TRM-0031: Ontological Membership
-  conformance_principle:
-    KSCL-PRN-001: Conformance depends exclusively on normative semantic content
-  identifier_policy:
-    artifact_prefixes:
-      principle: PRI
-      requirement: REQ
-      invariant: INV
-      term: TRM
-    domain_prefixes:
-      identity: IDN
-      structure: STR
-      semantics: SEM
-      conformance: CNF
-      evolution: EVO
-
-kscl_core:
-  atoms:
-    - Entity
-    - Reference
-    - PropertyDefinition
-    - PropertyValue
-    - PropertyStrength
-    - Representation
-    - Evidence
-    - Origin
-    - Lineage
-  assertions:
-    - Correlation
-    - Support
-    - Transition
-    - Compatibility
-  evaluations:
-    - Resolution
-    - Coverage
-    - Fidelity
-  operations:
-    - Reconstruction
-    - Binding
-    - Assessment
-
-working_documents:
-  - docs/kos-comn/normative/NS-0-EDITORIAL-AND-TERMINOLOGY-POLICY.en.md
-  - docs/kos-comn/normative/NS-1-KSCL-CORE-SPECIFICATION.en.md
-  - docs/kos-comn/architecture/AR-4-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-4-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-5-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-5-CLOSURE.en.md
-  - docs/kos-comn/architecture/GATE-B-ASSESSMENT.es.md
-  - docs/kos-comn/architecture/GATE-B-ASSESSMENT.en.md
-
-next_action:
-  id: NS-1-CHAPTER-7
-  description_es: Completar y persistir los invariantes del núcleo con criterios de verificabilidad, evidencia de conformidad y trazabilidad normativa.
-  description_en: Complete and persist the core invariants with verifiability criteria, conformance evidence, and normative traceability.
-  decision_target: NS-1 CORE INVARIANTS
-
-reentry_rule:
-  - verify actual Git HEAD before development
-  - reconcile CURRENT.kscl against later commits/documents
-  - do not infer authority from this record
-
-assertions:
-  - CURRENT.kscl is mutable continuity state
-  - checkpoint is historical snapshot
-  - KSCL continuity != architectural authority
-  - KSCL reconstruction != proof
-  - Gate A PASS != KOS-Lab integration authorization
-  - Gate B PASS != production readiness
+notes:
+  - CURRENT.kscl is continuity state only.
+  - ARCHITECTURE.kscl holds frozen architectural decisions.
+  - HISTORY.kscl logs the chronological evolution of decisions.
+  - DECISIONS.kscl enumerates decision records with stable identifiers.
+  - Localizations are separate files with semantically equivalent content and stable identifiers.
