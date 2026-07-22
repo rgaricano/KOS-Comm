@@ -36,6 +36,12 @@ A normative relationship in which the semantic interpretation of one semantic co
 ### KSCL-TERM-0021 — Dependency Closure
 The complete set of semantic constructs reachable through recursive application of the dependency relation.
 
+### KSCL-TERM-0030 — Core Invariant
+A normative semantic property that SHALL remain true for every valid KSCL semantic model.
+
+### KSCL-TERM-0031 — Ontological Membership
+The unique assignment of a semantic construct to exactly one Core Ontology category.
+
 ## 4. Core Ontology
 
 ### 4.1 Semantic Atom
@@ -134,20 +140,127 @@ No semantic dependency SHALL violate the Core Dependency Matrix.
 
 ## 6. Core Invariants
 
-### KSCL-INV-001
-Atoms SHALL NOT depend on upper semantic layers.
+### 6.1 Identity Invariants
 
-### KSCL-INV-002
-Assertions SHALL reference at least one Atom.
+#### KSCL-INV-IDN-001
+Every Semantic Atom SHALL possess exactly one semantic identity.
 
-### KSCL-INV-003
-Evaluations SHALL NOT modify Assertions.
+Verification rule: `cardinality(semanticIdentity)=1`.
 
-### KSCL-INV-004
-Operations SHALL NOT define semantics.
+Required evidence: semantic model, identity registry, validation report.
 
-### KSCL-INV-005
-Semantic dependency graphs SHALL be acyclic unless a profile explicitly permits otherwise.
+#### KSCL-INV-IDN-002
+The semantic identity of a Semantic Atom SHALL remain invariant throughout its lifetime.
+
+Verification rule: `semanticIdentity(t1)=semanticIdentity(t2)` for any two valid observations of the same Semantic Atom.
+
+Required evidence: historical trace, identity comparison.
+
+#### KSCL-INV-IDN-003
+Semantic identity SHALL be independent of representation.
+
+Verification rule: semantically equivalent representations SHALL resolve to the same semantic identity.
+
+Required evidence: representation mapping, semantic resolution report.
+
+### 6.2 Structural Invariants
+
+#### KSCL-INV-STR-001
+Every semantic dependency SHALL reference an existing semantic construct.
+
+Verification rule: every dependency target SHALL resolve uniquely.
+
+Required evidence: dependency validation report.
+
+#### KSCL-INV-STR-002
+Every semantic construct SHALL belong to exactly one Core Ontology category.
+
+Verification rule: `cardinality(category)=1`.
+
+Required evidence: semantic model, category validation report.
+
+#### KSCL-INV-STR-003
+Every semantic construct SHALL satisfy all dependency constraints defined by the Core Dependency Matrix.
+
+Verification rule: every dependency edge SHALL be valid.
+
+Required evidence: dependency graph, validation report.
+
+### 6.3 Semantic Invariants
+
+#### KSCL-INV-SEM-001
+The semantic meaning of a Semantic Atom SHALL NOT be altered by any Semantic Assertion, Semantic Evaluation, or Semantic Operation.
+
+Verification rule: `semanticMeaning(before)=semanticMeaning(after)`.
+
+Required evidence: semantic identity report, semantic comparison report.
+
+#### KSCL-INV-SEM-002
+A Semantic Evaluation SHALL characterize semantic constructs without modifying their semantic meaning.
+
+Verification rule: `meaning(before)=meaning(after)`.
+
+Required evidence: evaluation input, evaluation output, semantic equivalence report.
+
+#### KSCL-INV-SEM-003
+A Semantic Operation SHALL preserve every applicable Core Invariant.
+
+Verification rule: validate every applicable Core Invariant before and after execution.
+
+Required evidence: operation trace, invariant validation report.
+
+#### KSCL-INV-SEM-004
+Semantic meaning SHALL be independent of representation.
+
+Verification rule: semantically equivalent representations SHALL yield the same semantic interpretation.
+
+Required evidence: representation mapping, semantic interpretation report.
+
+### 6.4 Conformance Invariants
+
+#### KSCL-INV-CNF-001
+Conformance SHALL depend exclusively on normative semantic content.
+
+Verification rule: modify only representation-level characteristics; the conformance result SHALL remain unchanged.
+
+Required evidence: conformance report, variant representation set.
+
+#### KSCL-INV-CNF-002
+Semantically Equivalent Canonical Semantic Inputs SHALL produce identical Evaluation Results under identical conformance-relevant conditions.
+
+Verification rule: compare Evaluation Results for equivalent CSIs under identical configuration.
+
+Required evidence: CSI A, CSI B, evaluation configuration, Evaluation Result A, Evaluation Result B, comparison report.
+
+#### KSCL-INV-CNF-003
+Every conformance claim SHALL be supported by objective evidence traceable to the applicable normative identifiers.
+
+Verification rule: each conformance claim SHALL reference the satisfied or failed KSCL-REQ and KSCL-INV identifiers and the associated evidence set.
+
+Required evidence: conformance report, traceability matrix, evidence set.
+
+### 6.5 Evolution Invariants
+
+#### KSCL-INV-EVO-001
+Extensions SHALL NOT redefine the meaning of the core categories.
+
+Verification rule: compare extension semantics against the core category definitions; no meaning change is permitted.
+
+Required evidence: extension specification, compatibility analysis.
+
+#### KSCL-INV-EVO-002
+Any extension SHALL be expressible as a specialization or composition of the core categories.
+
+Verification rule: each extension construct SHALL map to at least one specialization or composition of core categories.
+
+Required evidence: extension mapping report.
+
+#### KSCL-INV-EVO-003
+Normative identifiers SHALL remain stable across semantically equivalent localizations.
+
+Verification rule: localized documents SHALL preserve all KSCL-REQ, KSCL-INV, KSCL-TERM and KSCL-PRI identifiers unchanged.
+
+Required evidence: localization comparison report.
 
 ## 7. Conformance Evidence
 
