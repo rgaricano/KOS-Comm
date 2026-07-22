@@ -24,7 +24,7 @@ architectural_state:
 active_item:
   id: NS-1
   name: KSCL Core Specification
-  position: normative baseline established; chapter 5 and 6 implemented; chapter 7 pending
+  position: chapter 7 open; core invariants pending consolidation
 
 invariants:
   - KOS-Lab authority preserved
@@ -54,6 +54,8 @@ invariants:
   - operations never define semantics
   - conformance is determined by normative semantic content
   - localizations are normative-equivalent documents with identical identifiers
+  - identifiers use prefix grammar PRI/REQ/INV/TRM with optional domain tags
+  - semantic assertions are aseveraciones semánticas in Spanish normative text
 
 closed_items:
   - Gate 0 architectural consensus
@@ -109,8 +111,22 @@ phase_3_result:
       - KSCL-TERM-0012: Evaluation Result
       - KSCL-TERM-0020: Semantic Dependency
       - KSCL-TERM-0021: Dependency Closure
+      - KSCL-TRM-0030: Core Invariant
+      - KSCL-TRM-0031: Ontological Membership
   conformance_principle:
-    KSCL-PRIN-001: Conformance depends exclusively on normative semantic content
+    KSCL-PRN-001: Conformance depends exclusively on normative semantic content
+  identifier_policy:
+    artifact_prefixes:
+      principle: PRI
+      requirement: REQ
+      invariant: INV
+      term: TRM
+    domain_prefixes:
+      identity: IDN
+      structure: STR
+      semantics: SEM
+      conformance: CNF
+      evolution: EVO
 
 kscl_core:
   atoms:
@@ -149,8 +165,8 @@ working_documents:
 
 next_action:
   id: NS-1-CHAPTER-7
-  description_es: Especificar los invariantes del núcleo con criterios de verificabilidad, evidencia de conformidad y trazabilidad normativa.
-  description_en: Specify the core invariants with verifiability criteria, conformance evidence, and normative traceability.
+  description_es: Completar y persistir los invariantes del núcleo con criterios de verificabilidad, evidencia de conformidad y trazabilidad normativa.
+  description_en: Complete and persist the core invariants with verifiability criteria, conformance evidence, and normative traceability.
   decision_target: NS-1 CORE INVARIANTS
 
 reentry_rule:
