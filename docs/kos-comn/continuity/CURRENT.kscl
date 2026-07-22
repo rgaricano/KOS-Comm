@@ -10,25 +10,28 @@ architectural_state:
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
   ar_2: CLOSED_PASS
-  ar_3: NEXT
+  ar_3: ACTIVE_INITIAL_MODEL_ESTABLISHED
   gate_a: PENDING
 
 active_item:
   id: AR-3
   name: Modelo de Binding / Binding Model
-  position: ready to start
+  position: initial model established; validation pass 1 pending
 
 invariants:
   - KOS-Lab authority preserved
   - KOS-Comm autonomy preserved
-  - Binding = bilateral seam
+  - Binding = explicit bilateral semantic seam
+  - bilateral != symmetric or reversible
+  - mapping capability != domain authority
+  - candidate != accepted domain state
+  - receipt != canonical import
+  - identity mapping != identity authority
+  - degradation cannot be silently elevated
   - KCA = neutral target
   - KCP = small and replaceable
   - KSCL = experimental/open decomposition
-  - receipt != canonical import
-  - communication != authority
   - representation != represented object
-  - representation != authority
   - reconstruction != authorization
   - promotion = evidence + governance
 
@@ -38,61 +41,67 @@ closed_items:
   - AR-1 Boundary Model
   - AR-2 Representation Model
 
-ar_2_closure:
-  formula: MINIMAL_SEMANTIC_CORE + DECLARED_SEMANTIC_CAPABILITIES + OPTIONAL_EXTENSIBLE_CLASSIFICATION
-  mandatory_core:
-    - subject
-    - semantic_context
-    - capabilities
-    - content
-  conditional_core:
-    - representation_identity
-    - provenance
-    - classification
-  capability_criticality:
-    - REQUIRED_FOR_INTERPRETATION
-    - REQUIRED_FOR_DECLARED_PROPERTY
-    - OPTIONAL
-    - INFORMATIONAL
-  interpretation_states:
-    - FULL
-    - DEGRADED
-    - UNINTERPRETABLE
-  final_review:
-    adversarial_cases: 7
-    passed: 7
-    critical_contradictions: 0
+ar_3_initial_model:
+  definition: explicit semantic adapter at domain/KCA boundary
+  directions:
+    - OUTBOUND
+    - INBOUND
+    - BIDIRECTIONAL
+  mapping_status:
+    - MAPPED
+    - MAPPED_WITH_DEGRADATION
+    - UNMAPPABLE
+    - REJECTED_BY_BINDING_POLICY
+    - UNSUPPORTED_CONTRACT
+  capability_mapping:
+    - SUPPORTED_NATIVE
+    - SUPPORTED_MAPPED
+    - SUPPORTED_WITH_DEGRADATION
+    - UNSUPPORTED
+    - NOT_APPLICABLE
+  identity_correlations:
+    - ONE_TO_ONE
+    - ONE_TO_MANY
+    - MANY_TO_ONE
+    - CONTEXTUAL
+    - UNRESOLVED
 
 working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.en.md
-  - docs/kos-comn/architecture/AR-2-FINAL-REVIEW.es.md
-  - docs/kos-comn/architecture/AR-2-FINAL-REVIEW.en.md
   - docs/kos-comn/architecture/AR-2-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-2-CLOSURE.en.md
+  - docs/kos-comn/architecture/AR-3-BINDING-MODEL.es.md
+  - docs/kos-comn/architecture/AR-3-BINDING-MODEL.en.md
 
 next_action:
-  id: AR-3-START
-  description_es: Iniciar Modelo de Binding definiendo seam bilateral, responsabilidades, mapeos, autoridad y criterios de conformidad.
-  description_en: Start Binding Model defining bilateral seam, responsibilities, mappings, authority and conformance criteria.
-  decision_target: AR-3 INITIAL MODEL
+  id: AR-3-VALIDATION-PASS-1
+  description_es: Ejecutar los 12 casos iniciales del Modelo de Binding y refinar responsabilidades, compatibilidad, política y composición.
+  description_en: Run the 12 initial Binding Model cases and refine responsibilities, compatibility, policy and composition.
+  decision_target: AR-3 REFINED MODEL
 
-ar_3_initial_questions:
-  - what a Binding owns and must never own
-  - inbound and outbound mapping symmetry/asymmetry
-  - identity mapping and correlation
-  - capability mapping
-  - loss and degradation propagation
-  - domain authority preservation
-  - Binding lifecycle/version compatibility
-  - KOS-specific Binding vs neutral Binding interface
-  - independent non-KOS Binding feasibility
+validation_cases:
+  - KOS to KCA partial observation
+  - KCA to KOS received result without canonical import
+  - non-KOS A to KCA to non-KOS B
+  - local identity across namespaces
+  - unsupported critical inbound capability
+  - declared lossy outbound mapping
+  - OUTBOUND-only Binding
+  - bidirectional non-reversible Binding
+  - incompatible contracts
+  - local policy stricter than KCA
+  - correlation without identity authority
+  - two-Binding chain with accumulated degradation
+
+open_focus:
+  - mandatory vs conditional binding identity
+  - local policy placement
+  - mapping-rule dependencies
+  - statically checkable compatibility
+  - persistent correlation without authoritative storage
+  - UNMAPPABLE vs INSUFFICIENT_INFORMATION
+  - multi-Binding composition
 
 reentry_rule:
   - verify actual Git HEAD before development
