@@ -10,13 +10,13 @@ architectural_state:
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
   ar_2: CLOSED_PASS
-  ar_3: ACTIVE_VALIDATION_PASS_1_COMPLETE
+  ar_3: ACTIVE_ADVERSARIAL_PASS_2_COMPLETE
   gate_a: PENDING
 
 active_item:
   id: AR-3
   name: Modelo de Binding / Binding Model
-  position: validation pass 1 complete; adversarial refinement pass 2 pending
+  position: adversarial pass 2 complete; closure assessment pending
 
 invariants:
   - KOS-Lab authority preserved
@@ -28,40 +28,42 @@ invariants:
   - receipt != canonical import
   - identity mapping != identity authority
   - degradation cannot be silently elevated
-  - without new justified evidence semantic property strength must not increase across Binding chains
+  - property strength may increase only with new independent explicit scoped justification/evidence
   - Binding policy = mapping admissibility; Domain policy = authoritative acceptance/action
   - declared compatibility != runtime mappability
   - Binding composition safety must be validated, not assumed
+  - correlation conflict must remain explicit unless resolved by declared scope/basis
+  - binding identity unique within declared interoperability scope
   - KCA = neutral target
   - KCP = small and replaceable
   - KSCL = experimental/open decomposition
   - reconstruction != authorization
 
-closed_items:
-  - Gate 0 architectural consensus
-  - KOS-Lab <-> KOS-Comm reconciliation
-  - AR-1 Boundary Model
-  - AR-2 Representation Model
+ar_3_evidence:
+  initial_model: COMPLETE
+  validation_pass_1:
+    cases: 12
+    passed: 12
+    critical_contradictions: 0
+  adversarial_pass_2:
+    cases: 8
+    passed: 8
+    critical_contradictions: 0
+    core_rework: false
+    closure_candidate: true
 
-ar_3_validation_pass_1:
-  cases: 12
-  passed: 12
-  pass_without_change: 6
-  pass_with_refinement: 6
-  critical_contradictions: 0
-  core_premise_rework: false
-
-ar_3_refinements:
-  binding_identity: required for interoperable BindingContract within declared scope
+ar_3_stabilized_refinements:
+  binding_identity: required for interoperable BindingContract and unique within declared scope
   status_reason_separation: true
-  insufficient_information: UNMAPPABLE + INSUFFICIENT_CONTEXT when blocking mapping
-  correlation_semantics: Binding owns semantics, persistence not necessarily
-  policy_boundary: mapping admissibility at Binding; authoritative acceptance at Domain
+  correlation_conflict: explicit, no silent resolution
+  correlation_persistence: not necessarily owned by Binding
+  policy_boundary: mapping admissibility at Binding; authoritative acceptance/action at Domain
   compatibility_levels:
-    - DECLARED_COMPATIBILITY
-    - RUNTIME_MAPPABILITY
-  composition: explicit validation required
-  lifecycle: management/governance metadata, not core invariant yet
+    - DECLARED_CONTRACT_COMPATIBILITY
+    - RUNTIME_SEMANTIC_MAPPABILITY
+  composition: explicit assessment required
+  restoration: only with new independent explicit scoped justification/evidence
+  lifecycle: management/governance metadata, not core invariant
 
 working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
@@ -72,22 +74,26 @@ working_documents:
   - docs/kos-comn/architecture/AR-3-BINDING-MODEL.en.md
   - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.es.md
   - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.en.md
+  - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.es.md
+  - docs/kos-comn/architecture/AR-3-BINDING-ADVERSARIAL.en.md
 
 next_action:
-  id: AR-3-REFINEMENT-ADVERSARIAL-PASS-2
-  description_es: Ejecutar segunda pasada adversarial sobre composición, correlaciones, versiones, autoridad, restauración justificada, contexto e interoperabilidad no-KOS.
-  description_en: Run adversarial pass 2 over composition, correlations, versions, authority, justified restoration, context and non-KOS interoperability.
-  decision_target: AR-3 CLOSURE CANDIDATE OR REWORK
+  id: AR-3-CLOSURE-ASSESSMENT
+  description_es: Revisar criterios finales, producir cierre bilingüe de AR-3 si procede y preparar evaluación de Gate A.
+  description_en: Review final criteria, produce bilingual AR-3 closure if appropriate, and prepare Gate A assessment.
+  decision_target: CLOSE_AR_3_OR_REWORK
 
-adversarial_cases:
-  - Binding composition with accumulated degradation
-  - conflicting correlations
-  - domain contract version transition
-  - Binding policy attempting domain authority
-  - property restoration using additional local evidence
-  - insufficient semantic context
-  - Binding identity collision
-  - non-KOS chain with partially overlapping capabilities
+closure_checks:
+  - explicit bilateral seam preserved
+  - authority separation preserved
+  - AR-1 property transitions preserved
+  - AR-2 criticality/degradation preserved
+  - identity and correlation semantics bounded
+  - compatibility and runtime mappability separated
+  - composition explicitly assessed
+  - policy boundary preserved
+  - non-KOS realization feasible
+  - encoding and transport remain out of AR-3
 
 reentry_rule:
   - verify actual Git HEAD before development
