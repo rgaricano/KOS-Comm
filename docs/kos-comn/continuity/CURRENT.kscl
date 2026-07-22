@@ -13,85 +13,103 @@ architectural_state:
   ar_2: CLOSED_PASS
   ar_3: CLOSED_PASS
   gate_a: PASS
-  phase_2: ENABLED
-  ar_4: READY_TO_START
+  phase_2: ACTIVE
+  ar_4: ACTIVE_INITIAL_MODEL_ESTABLISHED
+  ar_5: PENDING
   gate_b: PENDING
 
 active_item:
   id: AR-4
   name: Modelo de Reconstrucción / Reconstruction Model
-  position: Gate A passed; Phase II enabled; AR-4 next
+  position: initial model established; validation pass 1 next
 
 invariants:
   - KOS-Lab authority preserved
   - KOS-Comm autonomy preserved
   - representation != represented object
-  - Binding = explicit bilateral semantic seam
+  - reconstruction != inversion by default
+  - reconstruction != authorization
+  - reconstructed artifact != accepted/canonical domain state
+  - Binding != Reconstruction
   - mapping capability != domain authority
   - candidate != accepted domain state
   - receipt != canonical import
-  - reconstruction != authorization
-  - identity mapping != identity authority
+  - identity evidence/correlation/claim != identity authority
+  - fidelity claims are relative to explicit scope
+  - unresolved ambiguity must remain explicit
+  - partial reconstruction != failure by definition
   - property strength may increase only with new independent explicit scoped justification/evidence
-  - Binding policy = mapping admissibility; Domain policy = authoritative acceptance/action
-  - declared contract compatibility != runtime semantic mappability
-  - Binding composition safety must be validated, not assumed
+  - provenance of reconstruction is composite when multiple sources/rules participate
+  - historical reconstruction != current-state assertion
   - KCA = neutral core
   - KOS Binding = domain-specific realization, not neutral core
-  - encoding remains outside Phase I semantic core
-  - KCP remains small, replaceable and outside Phase I semantic core
-  - KSCL remains experimental/open decomposition
+  - encoding remains outside reconstruction semantics
+  - KCP remains outside reconstruction semantics
+  - KSCL remains experimental/open decomposition pending AR-5
 
-closed_items:
-  - Gate 0 architectural consensus
-  - KOS-Lab <-> KOS-Comm reconciliation
-  - AR-1 Boundary Model
-  - AR-2 Representation Model
-  - AR-3 Binding Model
-  - Gate A / Phase I
-
-phase_1_result:
-  status: CLOSED_PASS
-  gate_a: PASS
-  components:
-    ar_1: CLOSED_PASS
-    ar_2: CLOSED_PASS
-    ar_3: CLOSED_PASS
-  authority_cycles: NONE_IDENTIFIED
-  neutral_non_kos_realization: CONCEPTUALLY_FEASIBLE
-  reconstruction_ownership: OUTSIDE_PHASE_1
-  encoding_ownership: OUTSIDE_PHASE_1
-  kcp_ownership: OUTSIDE_PHASE_1
+ar_4_initial_model:
+  definition: represented information + context + evidence + rules -> reconstruction result
+  candidate_classes:
+    - EXACT
+    - EQUIVALENT
+    - PARTIAL
+    - DEGRADED
+    - AMBIGUOUS
+    - IMPOSSIBLE
+  result_fields:
+    - status
+    - artifact
+    - candidates
+    - target_scope
+    - reconstructed_scope
+    - fidelity
+    - property_transitions
+    - evidence_refs
+    - provenance
+    - diagnostics
+  evidence_classes:
+    - REPRESENTED_EVIDENCE
+    - CONTEXTUAL_EVIDENCE
+    - LOCAL_INDEPENDENT_EVIDENCE
+    - DERIVED_EVIDENCE
 
 working_documents:
-  - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-2-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-2-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-3-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-3-CLOSURE.en.md
   - docs/kos-comn/architecture/GATE-A-ASSESSMENT.es.md
   - docs/kos-comn/architecture/GATE-A-ASSESSMENT.en.md
+  - docs/kos-comn/architecture/AR-4-RECONSTRUCTION-MODEL.es.md
+  - docs/kos-comn/architecture/AR-4-RECONSTRUCTION-MODEL.en.md
 
 next_action:
-  id: AR-4-INITIAL-MODEL
-  description_es: Iniciar el Modelo de Reconstrucción definiendo semántica, clases, requisitos de evidencia, resultados parciales/ambiguos/imposibles y separación respecto de Binding y autoridad.
-  description_en: Start the Reconstruction Model by defining semantics, classes, evidence requirements, partial/ambiguous/impossible outcomes, and separation from Binding and authority.
-  decision_target: AR-4 INITIAL MODEL
+  id: AR-4-VALIDATION-PASS-1
+  description_es: Validar el modelo inicial de reconstrucción mediante los doce casos previstos y resolver la relación entre estado, clase, alcance, fidelidad, ambigüedad y parcialidad.
+  description_en: Validate the initial Reconstruction Model through the twelve planned cases and resolve the relationship among status, class, scope, fidelity, ambiguity and partiality.
+  decision_target: AR-4 VALIDATION PASS 1
 
-ar_4_initial_questions:
-  - what reconstruction means
-  - reconstruction classes
-  - required information/evidence by class
-  - partial reconstruction semantics
-  - ambiguous reconstruction semantics
-  - impossible reconstruction semantics
-  - provenance preservation
-  - degradation propagation
-  - reconstruction vs authorization
-  - reconstruction vs Binding
-  - reconstructed equivalence/fidelity conditions
-  - neutral non-KOS applicability
+ar_4_open_questions:
+  - status vs fidelity/reconstruction class
+  - coexistence of PARTIAL and AMBIGUOUS
+  - multiple candidate representation
+  - DEGRADED vs PARTIAL
+  - minimum ReconstructionScope
+  - conflicting evidence semantics
+  - explicit ReconstructionClaim
+  - successive reconstruction composition
+  - temporal/multi-state reconstruction
+  - AR-5/KSCL consumption boundary
+
+ar_4_validation_cases:
+  - complete representation with equivalent reconstruction
+  - partial representation with partial reconstruction
+  - irreversible loss preventing required reconstruction
+  - two equally compatible candidates
+  - new local evidence restoring a property
+  - conflicting evidence from two sources
+  - correct reconstruction not authorized by domain
+  - neutral reconstruction without Binding
+  - reconstruction followed by Binding toward KOS
+  - historical state reconstruction versus current state
+  - reconstruction chain with accumulated degradation
+  - target scope smaller than available information
 
 phase_2_plan:
   - AR-4 Reconstruction Model
