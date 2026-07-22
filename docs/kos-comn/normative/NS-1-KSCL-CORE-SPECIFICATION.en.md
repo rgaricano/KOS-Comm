@@ -216,64 +216,44 @@ Verification rule: semantically equivalent representations SHALL yield the same 
 
 Required evidence: representation mapping, semantic interpretation report.
 
-### 6.4 Conformance Invariants
+## 7. Semantic Integrity
 
-#### KSCL-INV-CNF-001
-Conformance SHALL depend exclusively on normative semantic content.
+### KSCL-PRN-002
+The semantic integrity of KSCL SHALL be preserved across all conformant semantic models and conformant operations.
 
-Verification rule: modify only representation-level characteristics; the conformance result SHALL remain unchanged.
+### KSCL-INV-INT-001
+Semantic integrity SHALL remain preserved across all conformant semantic models.
 
-Required evidence: conformance report, variant representation set.
+Verification rule: validate that every applicable Core Invariant remains true for the model under test.
 
-#### KSCL-INV-CNF-002
-Semantically Equivalent Canonical Semantic Inputs SHALL produce identical Evaluation Results under identical conformance-relevant conditions.
+Required evidence: integrity validation report.
 
-Verification rule: compare Evaluation Results for equivalent CSIs under identical configuration.
+### KSCL-INV-INT-002
+No conformant operation SHALL introduce a violation of semantic integrity.
 
-Required evidence: CSI A, CSI B, evaluation configuration, Evaluation Result A, Evaluation Result B, comparison report.
+Verification rule: execute the operation and verify that no Core Invariant or applicable requirement is violated.
 
-#### KSCL-INV-CNF-003
-Every conformance claim SHALL be supported by objective evidence traceable to the applicable normative identifiers.
+Required evidence: operation trace, integrity validation report.
 
-Verification rule: each conformance claim SHALL reference the satisfied or failed KSCL-REQ and KSCL-INV identifiers and the associated evidence set.
+### KSCL-INV-INT-003
+Semantic integrity SHALL be assessed independently from serialization and transport.
 
-Required evidence: conformance report, traceability matrix, evidence set.
+Verification rule: alter only serialization or transport characteristics; the integrity result SHALL remain unchanged.
 
-### 6.5 Evolution Invariants
+Required evidence: integrity assessment report, variant serialization set.
 
-#### KSCL-INV-EVO-001
-Extensions SHALL NOT redefine the meaning of the core categories.
-
-Verification rule: compare extension semantics against the core category definitions; no meaning change is permitted.
-
-Required evidence: extension specification, compatibility analysis.
-
-#### KSCL-INV-EVO-002
-Any extension SHALL be expressible as a specialization or composition of the core categories.
-
-Verification rule: each extension construct SHALL map to at least one specialization or composition of core categories.
-
-Required evidence: extension mapping report.
-
-#### KSCL-INV-EVO-003
-Normative identifiers SHALL remain stable across semantically equivalent localizations.
-
-Verification rule: localized documents SHALL preserve all KSCL-REQ, KSCL-INV, KSCL-TERM and KSCL-PRI identifiers unchanged.
-
-Required evidence: localization comparison report.
-
-## 7. Conformance Evidence
+## 8. Conformance Evidence
 
 A conformant implementation SHALL provide conformance evidence for each applicable requirement and invariant.
 
 A conformance report SHALL reference the exact KSCL-REQ and KSCL-INV identifiers satisfied or failed.
 
-## 8. Extension Rules
+## 9. Extension Rules
 
 Extensions MAY add new semantic structures only as specializations or compositions of the core categories.
 
 Extensions SHALL NOT redefine the meaning of the core categories.
 
-## 9. Notes
+## 10. Notes
 
 The normative master language is English. Localizations SHALL be semantically equivalent documents with identical identifiers.
