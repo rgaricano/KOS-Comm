@@ -17,12 +17,14 @@ architectural_state:
   ar_4: CLOSED_PASS
   ar_5: CLOSED_PASS
   gate_b: PASS
-  phase_3: READY
+  phase_3: ACTIVE
+  ns_0: ACTIVE
+  ns_1: WORKING_DRAFT
 
 active_item:
-  id: PHASE-III
-  name: Specification & Implementation Readiness
-  position: Phase II closed; foundation stabilized; next phase ready
+  id: NS-1
+  name: KSCL Core Specification
+  position: normative baseline established; chapter 5 and 6 implemented; chapter 7 pending
 
 invariants:
   - KOS-Lab authority preserved
@@ -48,8 +50,10 @@ invariants:
   - KCP remains outside reconstruction semantics
   - KSCL remains experimental/open decomposition pending implementation specifics
   - any new KSCL construction must be expressible as a specialization or composition of the core categories
-  - semantic dependencies are acyclic
+  - semantic dependencies are acyclic unless a profile explicitly permits otherwise
   - operations never define semantics
+  - conformance is determined by normative semantic content
+  - localizations are normative-equivalent documents with identical identifiers
 
 closed_items:
   - Gate 0 architectural consensus
@@ -89,6 +93,25 @@ phase_2_result:
   distributed_architecture: PASS
   governance_separation: PASS
 
+phase_3_result:
+  status: ACTIVE
+  documents:
+    ns_0: ACTIVE
+    ns_1: WORKING_DRAFT
+  language_policy:
+    master_language: English
+    localizations: semantically equivalent, identifier-stable
+  glossary_policy:
+    canonical_terms:
+      - KSCL-TERM-0003: Semantic Assertion / Aseveración semántica
+      - KSCL-TERM-0010: Canonical Semantic Input (CSI)
+      - KSCL-TERM-0011: Semantically Equivalent Canonical Semantic Inputs
+      - KSCL-TERM-0012: Evaluation Result
+      - KSCL-TERM-0020: Semantic Dependency
+      - KSCL-TERM-0021: Dependency Closure
+  conformance_principle:
+    KSCL-PRIN-001: Conformance depends exclusively on normative semantic content
+
 kscl_core:
   atoms:
     - Entity
@@ -115,6 +138,8 @@ kscl_core:
     - Assessment
 
 working_documents:
+  - docs/kos-comn/normative/NS-0-EDITORIAL-AND-TERMINOLOGY-POLICY.en.md
+  - docs/kos-comn/normative/NS-1-KSCL-CORE-SPECIFICATION.en.md
   - docs/kos-comn/architecture/AR-4-CLOSURE.es.md
   - docs/kos-comn/architecture/AR-4-CLOSURE.en.md
   - docs/kos-comn/architecture/AR-5-CLOSURE.es.md
@@ -123,10 +148,10 @@ working_documents:
   - docs/kos-comn/architecture/GATE-B-ASSESSMENT.en.md
 
 next_action:
-  id: PHASE-III-SPECIFICATION
-  description_es: Iniciar la fase de especificación normativa e implementación sobre el núcleo KSCL estabilizado.
-  description_en: Start normative specification and implementation work on the stabilized KSCL core.
-  decision_target: PHASE_III_READY
+  id: NS-1-CHAPTER-7
+  description_es: Especificar los invariantes del núcleo con criterios de verificabilidad, evidencia de conformidad y trazabilidad normativa.
+  description_en: Specify the core invariants with verifiability criteria, conformance evidence, and normative traceability.
+  decision_target: NS-1 CORE INVARIANTS
 
 reentry_rule:
   - verify actual Git HEAD before development
