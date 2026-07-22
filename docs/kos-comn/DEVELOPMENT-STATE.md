@@ -2,7 +2,7 @@
 
 ## Estado
 
-**Activo — fase de reconstrucción y definición arquitectónica.**
+**Activo — fase de reconstrucción, consolidación y persistencia arquitectónica.**
 
 ## Repositorio y rama
 
@@ -20,18 +20,18 @@ El foco original KCP/KSCL se amplía a una arquitectura superior denominada **KC
 ## Arquitectura de referencia actual
 
 ```text
-Persistence
-   ↓
+Persistence / Canonical Knowledge
+            ↓
 KRM — Knowledge Representation Model
-   ↓
+            ↓
 KEncoding — Knowledge Encoding
-   ↓
+            ↓
 KCP — Knowledge Communication Protocol
-   ↓
+            ↓
 KSCL — Knowledge Session Continuity Layer
-   ↓
+            ↓
 CP — Cognitive Projection
-   ↓
+            ↓
 Consumers
 ```
 
@@ -44,12 +44,13 @@ Consumers
 5. La proyección cognitiva no adquiere autoridad canónica sobre el conocimiento fuente.
 6. La arquitectura propuesta debe contrastarse con las fronteras ya acreditadas en KOS antes de cualquier integración.
 7. La persistencia documental en Git es obligatoria para permitir reentrada después de pérdida de contexto.
+8. La rama `KOS-Comn` conserva como referencia de trabajo el eje KCA/KRM/KEncoding/KCP/KSCL/CP hasta completar su primera consolidación formal.
 
 ## Estado por componente
 
 | Componente | Estado | Próximo trabajo |
 |---|---|---|
-| KCA | INITIAL DRAFT | formalizar capas, interfaces, invariantes y plano de control/datos |
+| KCA | CONSOLIDATED DRAFT | formalizar capas, interfaces, invariantes y plano de control/datos |
 | KRM | PROPOSED | reconstruir modelo de información compatible con KOS |
 | KEncoding | PROPOSED | definir requisitos de codificación, integridad y evolución |
 | KCP | TO BE RECONSTRUCTED | analizar funciones reales de comunicación y transporte |
