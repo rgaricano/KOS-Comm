@@ -2,7 +2,7 @@
 
 ## Checkpoint
 
-**Date:** 2026-07-21
+**Date:** 2026-07-22
 
 ## Context reconstructed
 
@@ -58,6 +58,7 @@ Consumers
 6. CP remains a derived projection boundary and does not gain canonical authority.
 7. Data-plane and control-plane separation must be developed explicitly.
 8. Repository persistence is mandatory after significant architectural work.
+9. The branch `KOS-Comn` keeps the KCA/KRM/KEncoding/KCP/KSCL/CP line as the working reference until the first structural disambiguation is completed.
 
 ## Persisted documents
 
