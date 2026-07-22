@@ -1,7 +1,6 @@
 KSCL-EXPERIMENTAL/0.1
 
 current_id: KOS-COMM-CURRENT
-source_checkpoint: KOS-COMM-2026-07-21-AR2-REENTRY
 repository: rgaricano/KOS-Lab
 branch: KOS-Comn
 language: es
@@ -10,14 +9,14 @@ architectural_state:
   gate_0: PASS
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
-  ar_2: ACTIVE_REFINEMENT_PASS_2_COMPLETE
-  ar_3: PENDING
+  ar_2: CLOSED_PASS
+  ar_3: NEXT
   gate_a: PENDING
 
 active_item:
-  id: AR-2
-  name: Modelo de representación / Representation Model
-  position: refinement pass 2 complete; final review / closure assessment pending
+  id: AR-3
+  name: Modelo de Binding / Binding Model
+  position: ready to start
 
 invariants:
   - KOS-Lab authority preserved
@@ -33,17 +32,13 @@ invariants:
   - reconstruction != authorization
   - promotion = evidence + governance
 
-working_documents:
-  - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
-  - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.en.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.es.md
-  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.en.md
+closed_items:
+  - Gate 0 architectural consensus
+  - KOS-Lab <-> KOS-Comm reconciliation
+  - AR-1 Boundary Model
+  - AR-2 Representation Model
 
-closure_candidate:
+ar_2_closure:
   formula: MINIMAL_SEMANTIC_CORE + DECLARED_SEMANTIC_CAPABILITIES + OPTIONAL_EXTENSIBLE_CLASSIFICATION
   mandatory_core:
     - subject
@@ -63,32 +58,41 @@ closure_candidate:
     - FULL
     - DEGRADED
     - UNINTERPRETABLE
+  final_review:
+    adversarial_cases: 7
+    passed: 7
+    critical_contradictions: 0
 
-refined_findings:
-  - representation_identity is conditional, not universally mandatory
-  - no universal global subject identifier is required
-  - unknown capability is not automatically safe to ignore
-  - degradation must be explicit and conservative
-  - unsupported property dependency downgrades property confidence/status
-  - domain extensions may extend but not silently override core semantics
-  - composition cannot elevate guarantees without justified composition rules
-  - semantic criticality remains separate from protocol negotiation
-  - Claim, Evidence, Verification and Guarantee are distinct
+working_documents:
+  - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-1-CLOSURE.en.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-MODEL.en.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-VALIDATION.en.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.es.md
+  - docs/kos-comn/architecture/AR-2-REPRESENTATION-REFINEMENT.en.md
+  - docs/kos-comn/architecture/AR-2-FINAL-REVIEW.es.md
+  - docs/kos-comn/architecture/AR-2-FINAL-REVIEW.en.md
+  - docs/kos-comn/architecture/AR-2-CLOSURE.es.md
+  - docs/kos-comn/architecture/AR-2-CLOSURE.en.md
 
 next_action:
-  id: AR-2-FINAL-REVIEW
-  description_es: Ejecutar revisión adversarial final y evaluación de cierre de AR-2.
-  description_en: Perform final adversarial review and AR-2 closure assessment.
-  decision_target: CLOSE_AR_2_OR_REWORK
+  id: AR-3-START
+  description_es: Iniciar Modelo de Binding definiendo seam bilateral, responsabilidades, mapeos, autoridad y criterios de conformidad.
+  description_en: Start Binding Model defining bilateral seam, responsibilities, mappings, authority and conformance criteria.
+  decision_target: AR-3 INITIAL MODEL
 
-adversarial_cases:
-  - unknown critical capability
-  - composition with degraded component
-  - ephemeral representation without identity
-  - subject without global identifier
-  - undisclosed provenance
-  - guarantee dependent on unsupported capability
-  - conflicting domain extension
+ar_3_initial_questions:
+  - what a Binding owns and must never own
+  - inbound and outbound mapping symmetry/asymmetry
+  - identity mapping and correlation
+  - capability mapping
+  - loss and degradation propagation
+  - domain authority preservation
+  - Binding lifecycle/version compatibility
+  - KOS-specific Binding vs neutral Binding interface
+  - independent non-KOS Binding feasibility
 
 reentry_rule:
   - verify actual Git HEAD before development
