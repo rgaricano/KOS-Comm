@@ -1,4 +1,4 @@
-KSCL-CURRENT/0.2
+KSCL-CURRENT/0.3
 
 current_id: KOS-COMM-CURRENT
 repository: rgaricano/KOS-Lab
@@ -40,13 +40,13 @@ project_state:
 
 continuity:
   active_item:
-    id: NS-1
-    name: KSCL Core Specification
-    position: chapter 7 consolidation pending
+    id: NS-2
+    name: KSCL Semantic Constructs
+    position: ready for consolidation and authority recheck under frozen NS-1
   next_action:
-    id: NS-1-CHAPTER-7-CONSOLIDATION
-    description_es: Consolidar los invariantes del núcleo y cerrar provisionalmente NS-1.
-    description_en: Consolidate the core invariants and provisionally close NS-1.
+    id: NS-2-CONSOLIDATION
+    description_es: Revisar NS-2…NS-7 bajo la autoridad documental ya fijada, sin reabrir NS-1 salvo incoherencia real.
+    description_en: Review NS-2..NS-7 under the already fixed documentary authority, without reopening NS-1 unless a real inconsistency appears.
 
 architecture_decisions:
   architecture_authority: ARCHITECTURE.kscl
@@ -66,11 +66,11 @@ architecture_decisions:
     - governance_authority: NS-7
 
 governance:
-  session_focus: NS-1 chapter 7 consolidation
+  session_focus: NS-1 consolidated; NS-2..NS-7 under review
   open_questions:
-    - finalize chapter 7 block structure
-    - verify all identifier families against the frozen grammar
     - ensure REQ vs INV separation across NS family
+    - confirm all identifier families remain consistent with frozen grammar
+    - populate ARCHITECTURE.kscl, DECISIONS.kscl, HISTORY.kscl, ROADMAP.kscl
   reentry_rule:
     - verify actual Git HEAD before development
     - reconcile CURRENT.kscl against later commits/documents
