@@ -10,13 +10,13 @@ architectural_state:
   reconciliation: CLOSED
   ar_1: CLOSED_PASS
   ar_2: CLOSED_PASS
-  ar_3: ACTIVE_INITIAL_MODEL_ESTABLISHED
+  ar_3: ACTIVE_VALIDATION_PASS_1_COMPLETE
   gate_a: PENDING
 
 active_item:
   id: AR-3
   name: Modelo de Binding / Binding Model
-  position: initial model established; validation pass 1 pending
+  position: validation pass 1 complete; adversarial refinement pass 2 pending
 
 invariants:
   - KOS-Lab authority preserved
@@ -28,12 +28,14 @@ invariants:
   - receipt != canonical import
   - identity mapping != identity authority
   - degradation cannot be silently elevated
+  - without new justified evidence semantic property strength must not increase across Binding chains
+  - Binding policy = mapping admissibility; Domain policy = authoritative acceptance/action
+  - declared compatibility != runtime mappability
+  - Binding composition safety must be validated, not assumed
   - KCA = neutral target
   - KCP = small and replaceable
   - KSCL = experimental/open decomposition
-  - representation != represented object
   - reconstruction != authorization
-  - promotion = evidence + governance
 
 closed_items:
   - Gate 0 architectural consensus
@@ -41,30 +43,25 @@ closed_items:
   - AR-1 Boundary Model
   - AR-2 Representation Model
 
-ar_3_initial_model:
-  definition: explicit semantic adapter at domain/KCA boundary
-  directions:
-    - OUTBOUND
-    - INBOUND
-    - BIDIRECTIONAL
-  mapping_status:
-    - MAPPED
-    - MAPPED_WITH_DEGRADATION
-    - UNMAPPABLE
-    - REJECTED_BY_BINDING_POLICY
-    - UNSUPPORTED_CONTRACT
-  capability_mapping:
-    - SUPPORTED_NATIVE
-    - SUPPORTED_MAPPED
-    - SUPPORTED_WITH_DEGRADATION
-    - UNSUPPORTED
-    - NOT_APPLICABLE
-  identity_correlations:
-    - ONE_TO_ONE
-    - ONE_TO_MANY
-    - MANY_TO_ONE
-    - CONTEXTUAL
-    - UNRESOLVED
+ar_3_validation_pass_1:
+  cases: 12
+  passed: 12
+  pass_without_change: 6
+  pass_with_refinement: 6
+  critical_contradictions: 0
+  core_premise_rework: false
+
+ar_3_refinements:
+  binding_identity: required for interoperable BindingContract within declared scope
+  status_reason_separation: true
+  insufficient_information: UNMAPPABLE + INSUFFICIENT_CONTEXT when blocking mapping
+  correlation_semantics: Binding owns semantics, persistence not necessarily
+  policy_boundary: mapping admissibility at Binding; authoritative acceptance at Domain
+  compatibility_levels:
+    - DECLARED_COMPATIBILITY
+    - RUNTIME_MAPPABILITY
+  composition: explicit validation required
+  lifecycle: management/governance metadata, not core invariant yet
 
 working_documents:
   - docs/kos-comn/architecture/AR-1-CLOSURE.es.md
@@ -73,35 +70,24 @@ working_documents:
   - docs/kos-comn/architecture/AR-2-CLOSURE.en.md
   - docs/kos-comn/architecture/AR-3-BINDING-MODEL.es.md
   - docs/kos-comn/architecture/AR-3-BINDING-MODEL.en.md
+  - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.es.md
+  - docs/kos-comn/architecture/AR-3-BINDING-VALIDATION.en.md
 
 next_action:
-  id: AR-3-VALIDATION-PASS-1
-  description_es: Ejecutar los 12 casos iniciales del Modelo de Binding y refinar responsabilidades, compatibilidad, política y composición.
-  description_en: Run the 12 initial Binding Model cases and refine responsibilities, compatibility, policy and composition.
-  decision_target: AR-3 REFINED MODEL
+  id: AR-3-REFINEMENT-ADVERSARIAL-PASS-2
+  description_es: Ejecutar segunda pasada adversarial sobre composición, correlaciones, versiones, autoridad, restauración justificada, contexto e interoperabilidad no-KOS.
+  description_en: Run adversarial pass 2 over composition, correlations, versions, authority, justified restoration, context and non-KOS interoperability.
+  decision_target: AR-3 CLOSURE CANDIDATE OR REWORK
 
-validation_cases:
-  - KOS to KCA partial observation
-  - KCA to KOS received result without canonical import
-  - non-KOS A to KCA to non-KOS B
-  - local identity across namespaces
-  - unsupported critical inbound capability
-  - declared lossy outbound mapping
-  - OUTBOUND-only Binding
-  - bidirectional non-reversible Binding
-  - incompatible contracts
-  - local policy stricter than KCA
-  - correlation without identity authority
-  - two-Binding chain with accumulated degradation
-
-open_focus:
-  - mandatory vs conditional binding identity
-  - local policy placement
-  - mapping-rule dependencies
-  - statically checkable compatibility
-  - persistent correlation without authoritative storage
-  - UNMAPPABLE vs INSUFFICIENT_INFORMATION
-  - multi-Binding composition
+adversarial_cases:
+  - Binding composition with accumulated degradation
+  - conflicting correlations
+  - domain contract version transition
+  - Binding policy attempting domain authority
+  - property restoration using additional local evidence
+  - insufficient semantic context
+  - Binding identity collision
+  - non-KOS chain with partially overlapping capabilities
 
 reentry_rule:
   - verify actual Git HEAD before development
